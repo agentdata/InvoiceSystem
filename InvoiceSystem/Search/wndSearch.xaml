@@ -8,17 +8,20 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <Label Content="Search Window" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1"/>
-        <Button Content="Back to main" FontSize="30" Grid.Row="1" Grid.Column="1" Click="ReturnToMainButton_Action"/>
-        
+        <Label Content="Search Window" FontSize="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="2"/>
+        <Button Content="Back to main" Grid.Row="2" Grid.Column="2" FontSize="30" Click="ReturnToMainButton_Action"/>
 
     </Grid>
 </UserControl>
