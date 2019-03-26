@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using InvoiceSystem.Search;
 using InvoiceSystem.Items;
+using System.Data;
 
 namespace InvoiceSystem.Main
 {
@@ -26,11 +27,16 @@ namespace InvoiceSystem.Main
     {
         //Fields
         private readonly ViewNavigationController viewNavigationController;
+        //InvoiceList Invoices = new InvoiceList();
+        clsMainLogic mainLogic;
+        
 
         public wndMain(ViewNavigationController viewNavigationController)
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
+            mainLogic = new clsMainLogic();
+            DataContext = this;
         }
 
         private void AddNewInvoiceButton_Action(object sender, RoutedEventArgs e)
@@ -45,6 +51,16 @@ namespace InvoiceSystem.Main
         private void InvoiceItemEditButton_Action(object sender, RoutedEventArgs e)
         {
             viewNavigationController.ChangeCurrentView(new wndItems(viewNavigationController));
+        }
+
+        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void GetInvoicesButton_Action(object sender, RoutedEventArgs e)
+        {
+            mainLogic.LoadInvoices();
         }
     }
 }

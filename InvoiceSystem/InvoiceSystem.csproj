@@ -77,6 +77,8 @@
     <Compile Include="Main\wndMain.xaml.cs">
       <DependentUpon>wndMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OtherClasses\Invoice.cs" />
+    <Compile Include="OtherClasses\InvoiceList.cs" />
     <Compile Include="OtherClasses\ObservableUserControl.cs" />
     <Compile Include="OtherClasses\ViewNavigationController.cs" />
     <Compile Include="Search\clsSearchLogic.cs" />
@@ -139,7 +141,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
@@ -151,6 +152,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="InvoiceDB.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
