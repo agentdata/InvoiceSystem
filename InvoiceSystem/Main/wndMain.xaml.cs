@@ -39,16 +39,16 @@ namespace InvoiceSystem.Main
             DataContext = this;
         }
 
-        private void AddNewInvoiceButton_Action(object sender, RoutedEventArgs e)
+        private void AddNewInvoiceMenuButton_Action(object sender, RoutedEventArgs e)
         {
         }
 
-        private void SearchInvoicesButton_Action(object sender, RoutedEventArgs e)
+        private void SearchInvoicesMenuButton_Action(object sender, RoutedEventArgs e)
         {
             viewNavigationController.ChangeCurrentView(new wndSearch(viewNavigationController));
         }
 
-        private void InvoiceItemEditButton_Action(object sender, RoutedEventArgs e)
+        private void EditItemsMenuButton_Action(object sender, RoutedEventArgs e)
         {
             viewNavigationController.ChangeCurrentView(new wndItems(viewNavigationController));
         }
@@ -61,6 +61,11 @@ namespace InvoiceSystem.Main
         private void GetInvoicesButton_Action(object sender, RoutedEventArgs e)
         {
             mainLogic.LoadInvoices();
+        }
+
+        private void MenuBarExitButton_Action(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

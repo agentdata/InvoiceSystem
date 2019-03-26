@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <!--Grid Definitions-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -15,23 +16,36 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <!-- Menu bar-->
+        <DockPanel Grid.Column="1" Grid.ColumnSpan="3" >
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
+                </MenuItem>
+                <MenuItem Header="_Actions">
+                    <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
+                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
+                    <MenuItem Header="Edit existing Items" Click="EditItemsMenuButton_Action"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About"/>
+                </MenuItem>
+            </Menu>
+            
+        </DockPanel>
 
-        <Button Content="Search invoice" FontSize="30" Grid.Row="1" Grid.Column="1" Click="SearchInvoicesButton_Action" />
-        <Grid Grid.Column="2" Grid.Row="1">
+        <!--Invoice list, double click action opens to view all details -->
+        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="10"/>
-            </Grid.ColumnDefinitions>
             <DataGrid Grid.Row="0" Grid.Column="1" Name="InvoiceTable_DataGrid" ItemsSource="{Binding mainLogic.Invoices}" ColumnWidth="*" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum.column}" IsReadOnly="True" FontSize="30"/>
@@ -39,9 +53,8 @@
                     <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="30"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="get invoices" Grid.Row="1" Grid.Column="1" FontSize="30" Margin="10,10,10,0" Click="GetInvoicesButton_Action"/>
+            <Button Content="refresh invoices" Grid.Row="1" Grid.Column="1" FontSize="30" Click="GetInvoicesButton_Action"/>
         </Grid>
-
-        <Button Content="Edit Items" FontSize="30" Grid.Row="1" Grid.Column="3" Click="InvoiceItemEditButton_Action"/>
+        
     </Grid>
 </UserControl>
