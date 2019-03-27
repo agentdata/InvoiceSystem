@@ -4,7 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvoiceSystem"
-        mc:Ignorable="d"
-        Title="Invoice System" >
-    <ContentPresenter Content="{Binding MainView, Mode=OneWay}"/>
+        mc:Ignorable="d" Title="Invoice System"
+        Width="800" Height="600">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Menu bar-->
+        <DockPanel >
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Main Screen" Click="MenuBarMainButton_Action"/>
+                    <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
+                </MenuItem>
+                <MenuItem Header="_Actions">
+                    <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
+                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
+                    <MenuItem Header="Edit existing Items" Click="EditItemsMenuButton_Action"/>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/> 
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <ContentPresenter Grid.Row="1" Content="{Binding MainView, Mode=OneWay}"/>
+    </Grid>
 </Window>

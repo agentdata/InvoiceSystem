@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace InvoiceSystem.OtherClasses
 {
     
-    class InvoiceList
+    public class InvoiceList
     {
         List<Invoice> Invoices { get; set; }
         

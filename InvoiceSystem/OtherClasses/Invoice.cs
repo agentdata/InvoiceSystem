@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InvoiceSystem.OtherClasses
 {
-    class Invoice
+    public class Invoice
     {
         public string InvoiceNum { get; set; }
         public string InvoiceDate { get; set;}

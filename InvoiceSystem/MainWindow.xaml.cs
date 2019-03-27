@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InvoiceSystem.Search;
+using InvoiceSystem.Items;
 
 namespace InvoiceSystem
 {
@@ -59,5 +61,41 @@ namespace InvoiceSystem
         {
             MainView = userControl;
         }
+
+        #region Menu Buttons
+
+        private void MenuBarExitButton_Action(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void AddNewInvoiceMenuButton_Action(object sender, RoutedEventArgs e)
+        {
+            viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(viewNavigationController));
+        }
+
+        private void SearchInvoicesMenuButton_Action(object sender, RoutedEventArgs e)
+        {
+            viewNavigationController.ChangeCurrentView(new wndSearch(viewNavigationController));
+        }
+
+        private void EditItemsMenuButton_Action(object sender, RoutedEventArgs e)
+        {
+            viewNavigationController.ChangeCurrentView(new wndItems(viewNavigationController));
+        }
+
+        private void MenuBarMainButton_Action(object sender, RoutedEventArgs e)
+        {
+            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+        }
+
+        private void MenuBarAboutItem_Action(object sender, RoutedEventArgs e)
+        {
+            AboutWindow window = new AboutWindow();
+            window.Show();
+        }
+
+        #endregion
+
     }
 }

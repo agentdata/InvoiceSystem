@@ -5,56 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvoiceSystem.Main"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="400" >
     <Grid>
         <!--Grid Definitions-->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-
-        <!-- Menu bar-->
-        <DockPanel Grid.Column="1" Grid.ColumnSpan="3" >
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
-                </MenuItem>
-                <MenuItem Header="_Actions">
-                    <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
-                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
-                    <MenuItem Header="Edit existing Items" Click="EditItemsMenuButton_Action"/>
-                </MenuItem>
-                <MenuItem Header="_Help">
-                    <MenuItem Header="_About"/>
-                </MenuItem>
-            </Menu>
-            
-        </DockPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <!--Invoice list, double click action opens to view all details -->
-        <Grid Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="5,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Grid.Column="1" Name="InvoiceTable_DataGrid" ItemsSource="{Binding mainLogic.Invoices}" ColumnWidth="*" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding mainLogic.Invoices}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum.column}" IsReadOnly="True" FontSize="30"/>
                     <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="30"/>
                     <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="30"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="refresh invoices" Grid.Row="1" Grid.Column="1" FontSize="30" Click="GetInvoicesButton_Action"/>
+            <Button Content="refresh invoices" Grid.Row="1" FontSize="30" Margin="0,10,0,10" Click="GetInvoicesButton_Action"/>
         </Grid>
-        
+        <Label Content="sales statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="1" Grid.Column="1"/>
+
     </Grid>
 </UserControl>

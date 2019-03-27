@@ -12,7 +12,7 @@ namespace InvoiceSystem.Main
 {
     class clsMainSQL
     {
-        string strDSN = "Provider = Microsoft.ACE.OLEDB.12.0; Data Source = InvoiceDB.accdb";
+        string strDSN = "Provider = Microsoft.ACE.OLEDB.12.0; Data Source = Invoice.accdb";
         public clsMainSQL()
         {
 
@@ -23,14 +23,13 @@ namespace InvoiceSystem.Main
             string strSQL = "SELECT * FROM Invoices";
             // create Objects of ADOConnection and ADOCommand  
             OleDbConnection myConn = new OleDbConnection(strDSN);
-            OleDbDataAdapter myCmd = new OleDbDataAdapter(strSQL, myConn);
-
-            myConn.Open();
-
+            OleDbDataAdapter myAdapter = new OleDbDataAdapter(strSQL, myConn);
+            
+            //var command = myConn.CreateCommand();
+            //command.CommandText = "SELECT * FROM Invoices";
 
             //do stuff with invoicelist object passed in
-
-            myConn.Close();
+            
 
 
             return Invoices;

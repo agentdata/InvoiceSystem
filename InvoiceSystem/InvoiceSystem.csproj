@@ -71,11 +71,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InvoiceDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Items\wndItems.xaml.cs">
       <DependentUpon>wndItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main\AddOrModifyInvoice.xaml.cs">
+      <DependentUpon>AddOrModifyInvoice.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\wndMain.xaml.cs">
       <DependentUpon>wndMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OtherClasses\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="OtherClasses\Invoice.cs" />
     <Compile Include="OtherClasses\InvoiceList.cs" />
@@ -104,7 +115,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Main\AddOrModifyInvoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main\wndMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OtherClasses\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -133,6 +152,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="InvoiceDBDataSet.xsc">
+      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="InvoiceDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>InvoiceDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="InvoiceDBDataSet.xss">
+      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -154,12 +184,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Images\Menu_Icons\" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="InvoiceDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Images\Menu_Icons\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

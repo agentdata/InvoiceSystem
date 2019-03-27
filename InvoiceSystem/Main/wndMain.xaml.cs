@@ -25,12 +25,16 @@ namespace InvoiceSystem.Main
     /// </summary>
     public partial class wndMain : UserControl
     {
-        //Fields
+        #region variables
         private readonly ViewNavigationController viewNavigationController;
-        //InvoiceList Invoices = new InvoiceList();
         clsMainLogic mainLogic;
-        
+        #endregion
 
+        #region Constructors
+        /// <summary>
+        /// This is the only constructor which takes a ViewNavigationController so that the current view being displayed can be changed
+        /// </summary>
+        /// <param name="viewNavigationController"></param>
         public wndMain(ViewNavigationController viewNavigationController)
         {
             InitializeComponent();
@@ -38,34 +42,15 @@ namespace InvoiceSystem.Main
             mainLogic = new clsMainLogic();
             DataContext = this;
         }
+        #endregion
 
-        private void AddNewInvoiceMenuButton_Action(object sender, RoutedEventArgs e)
-        {
-        }
+        #region Other Methods
 
-        private void SearchInvoicesMenuButton_Action(object sender, RoutedEventArgs e)
-        {
-            viewNavigationController.ChangeCurrentView(new wndSearch(viewNavigationController));
-        }
-
-        private void EditItemsMenuButton_Action(object sender, RoutedEventArgs e)
-        {
-            viewNavigationController.ChangeCurrentView(new wndItems(viewNavigationController));
-        }
-
-        private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
+        //This is a temporary button for testing that refreshes the view
         private void GetInvoicesButton_Action(object sender, RoutedEventArgs e)
         {
             mainLogic.LoadInvoices();
         }
-
-        private void MenuBarExitButton_Action(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
+        #endregion
     }
 }
