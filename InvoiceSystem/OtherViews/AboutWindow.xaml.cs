@@ -28,7 +28,7 @@ namespace InvoiceSystem.OtherClasses
         
         private void loadText()
         {
-            aboutText_TextBox.Text = "This invoice system was created by \n A few cool guys.";
+            aboutText_TextBox.Text = "This invoice system was created as a group project.";
         }
     }
 }

@@ -8,9 +8,6 @@
         Title="AboutWindow" Height="200" Width="200">
     <Grid>
 
-        <TextBox Name="aboutText_TextBox" 
-         ScrollViewer.HorizontalScrollBarVisibility="Auto"
-         ScrollViewer.VerticalScrollBarVisibility="Auto"
-         ScrollViewer.CanContentScroll="True"/>
+        <TextBox Name="aboutText_TextBox" />
     </Grid>
 </Window>
