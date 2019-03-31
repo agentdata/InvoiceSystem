@@ -23,11 +23,12 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding mainLogic.Invoices}" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum.column}" IsReadOnly="True" FontSize="30"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="30"/>
-                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="30"/>
+                    
+                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="20"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="20"/>
+                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="20"/>
                 </DataGrid.Columns>
             </DataGrid>
             <Button Content="refresh invoices" Grid.Row="1" FontSize="30" Margin="0,10,0,10" Click="GetInvoicesButton_Action"/>

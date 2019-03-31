@@ -25,10 +25,14 @@ namespace InvoiceSystem.Main
     /// </summary>
     public partial class wndMain : UserControl
     {
-        #region variables
+        #region Fields
         private readonly ViewNavigationController viewNavigationController;
-        clsMainLogic mainLogic;
-        #endregion
+        #endregion Fields
+
+        #region Properties
+        public InvoiceList Invoices { get; set; } = new InvoiceList();
+
+        #endregion Properties
 
         #region Constructors
         /// <summary>
@@ -39,7 +43,7 @@ namespace InvoiceSystem.Main
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
-            mainLogic = new clsMainLogic();
+            IntitialWindowLoad();
             DataContext = this;
         }
         #endregion
@@ -49,8 +53,14 @@ namespace InvoiceSystem.Main
         //This is a temporary button for testing that refreshes the view
         private void GetInvoicesButton_Action(object sender, RoutedEventArgs e)
         {
-            mainLogic.LoadInvoices();
+            Invoices = clsMainSQL.getAllInvoices(Invoices);
         }
+
+        private void IntitialWindowLoad()
+        {
+            Invoices = clsMainSQL.getAllInvoices(Invoices);
+        }
+
         #endregion
     }
 }

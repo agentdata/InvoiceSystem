@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,11 +10,16 @@ namespace InvoiceSystem.OtherClasses
     
     public class InvoiceList
     {
-        List<Invoice> Invoices { get; set; }
+        public ObservableCollection<Invoice> InvoicesCollection { get; set; } = new ObservableCollection<Invoice>();
+
+        public InvoiceList()
+        {
+
+        }
         
         public void addInvoice(Invoice Invoice)
         {
-            Invoices.Add(Invoice);
+            InvoicesCollection.Add(Invoice);
         }
     }
 }

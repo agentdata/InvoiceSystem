@@ -44,8 +44,6 @@ namespace InvoiceSystem.Main
 
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
-            //send input to the 
-            clsMainLogic helper = new clsMainLogic();
 
 
 
