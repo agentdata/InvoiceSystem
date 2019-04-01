@@ -18,22 +18,54 @@
         </Grid.ColumnDefinitions>
 
         <!--Invoice list, double click action opens to view all details -->
-        <Grid Grid.Column="0" Grid.Row="1" Margin="5,0,0,0">
+        <Grid Grid.Column="0" Grid.Row="1" Margin="5,0,5,5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False">
+            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False" >
+                <DataGrid.Resources>
+                    <ContextMenu x:Key="RightClick_ContextMenu">
+                        <MenuItem Header="_Edit" Click="InvoiceRowRightClickEdit_Action"/>
+                        <MenuItem Header="_Delete" Click="GridViewRightClickDelete_Action" Icon="/Images/Menu_Icons/delete.png"/>
+                    </ContextMenu>
+                    <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
+                        <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="InvoiceRow_DoubleClick"/>
+                        <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
+                    </Style>
+                </DataGrid.Resources>
+
                 <DataGrid.Columns>
-                    
                     <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="20"/>
                     <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="20"/>
                     <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="20"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="refresh invoices" Grid.Row="1" FontSize="30" Margin="0,10,0,10" Click="GetInvoicesButton_Action"/>
         </Grid>
-        <Label Content="sales statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="1" Grid.Column="1"/>
-
+        <Grid Grid.Column="1" Grid.Row="1" Margin="5,0,5,5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Sales Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="0" Grid.Column="1"/>
+            <DockPanel Grid.Row="2">
+                <Label Content="Number of invoices: " FontSize="15"/>
+                <Label Content="{Binding Invoices.totalInvoices}" FontSize="15"/>
+            </DockPanel>
+            <DockPanel Grid.Row="3">
+                <Label Content="Number of Items: " FontSize="15"/>
+                <Label Content="{Binding totalNumItems}" FontSize="15"/>
+            </DockPanel>
+            <DockPanel Grid.Row="4">
+                <Label Content="Total Items Sold: " FontSize="15"/>
+                <Label Content="{Binding totalNumItems}" FontSize="15"/>
+            </DockPanel>
+        </Grid>
     </Grid>
 </UserControl>

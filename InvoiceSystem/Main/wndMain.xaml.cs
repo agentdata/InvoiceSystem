@@ -31,7 +31,7 @@ namespace InvoiceSystem.Main
 
         #region Properties
         public InvoiceList Invoices { get; set; } = new InvoiceList();
-
+        public int totalNumItems { get { return clsMainSQL.totalItems(); } }
         #endregion Properties
 
         #region Constructors
@@ -49,18 +49,62 @@ namespace InvoiceSystem.Main
         #endregion
 
         #region Other Methods
-
-        //This is a temporary button for testing that refreshes the view
-        private void GetInvoicesButton_Action(object sender, RoutedEventArgs e)
-        {
-            Invoices = clsMainSQL.getAllInvoices(Invoices);
-        }
-
+        
+        /// <summary>
+        /// Tasks to complete when this view initially loads
+        /// </summary>
         private void IntitialWindowLoad()
         {
             Invoices = clsMainSQL.getAllInvoices(Invoices);
         }
 
         #endregion
+
+        #region UI Action
+        private void InvoiceRow_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            if (row != null)
+            {
+                Invoice selectedInvoice = row.Item as Invoice;
+                viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(this.viewNavigationController, selectedInvoice));
+            }
+        }
+        #endregion UI Action
+
+
+        private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
+        {
+
+            DataGridRow row = sender as DataGridRow;
+            //Invoice selectedInvoice = row.Item as Invoice;
+            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #"+ sender.GetType(),"Delete Invoice?",MessageBoxButton.YesNo);
+            
+            if (row != null)
+            {
+                
+                //Invoices.InvoicesCollection.Remove(Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault());
+            }
+        }
+
+        private void InvoiceRowRightClickEdit_Action(object sender, RoutedEventArgs e)
+        {
+            //Get the clicked MenuItem
+            var menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            //Find the placementTarget
+            var row = (DataGridRow)contextMenu.PlacementTarget;
+
+            if (row != null)
+            {
+                Invoice selectedInvoice = row.Item as Invoice;
+
+                viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x=> x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
+
+            }
+        }
     }
 }

@@ -70,6 +70,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Item.cs" />
+    <Compile Include="Classes\Items.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InvoiceDBDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -183,10 +185,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Images\Menu_Icons\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\Menu_Icons\Home-512.png" />
+    <Resource Include="Images\Menu_Icons\delete.png" />
+    <Resource Include="Images\Menu_Icons\add.png" />
     <Content Include="InvoiceDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

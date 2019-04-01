@@ -25,6 +25,9 @@ namespace InvoiceSystem.Main
     {
         private readonly ViewNavigationController viewNavigationController;
         private string NewOrEdit;
+        public Invoice CurrentInvoice { get; set; }
+
+        #region Constructors
 
         public AddOrModifyInvoice(ViewNavigationController viewNavigationController)
         {
@@ -34,20 +37,39 @@ namespace InvoiceSystem.Main
             DataContext = this;
         }
 
-        public AddOrModifyInvoice(ViewNavigationController viewNavigationController, InvoiceList invoices)
+        public AddOrModifyInvoice(ViewNavigationController viewNavigationController, Invoice invoice)
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
+            CurrentInvoice = invoice;
             NewOrEdit = "edit";
+            
             DataContext = this;
-        }
 
+        }
+        #endregion Constructors
+
+        #region UI Actions
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
+            switch (NewOrEdit)
+            {
+                case "edit":
+                    //sql command to edit existing entry
+                    break;
+                case "new":
+                    //sql command to add new entry
+                    break;
+            }
 
-
-
+            //then return to main screen
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+        }
+        #endregion UI Actions
+
+        private void InvoiceRow_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }
