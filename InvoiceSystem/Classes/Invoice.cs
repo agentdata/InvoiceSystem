@@ -13,8 +13,8 @@ namespace InvoiceSystem.OtherClasses
         public string InvoiceNum { get; set; }
         public string InvoiceDate { get; set;}
         public string TotalCost { get; set;}
-        public ObservableCollection<KeyValuePair<Item,int>> LineItems { get; set; } = new ObservableCollection<KeyValuePair<Item, int>>();
-
+        public ObservableCollection<LineItem> LineItems { get; set; } = new ObservableCollection<LineItem>();
+        public int TotalItems { get; set; } = 0;
 
         public Invoice(string InvoiceNum, string InvoiceDate, string TotalCost)
         {
@@ -25,7 +25,8 @@ namespace InvoiceSystem.OtherClasses
 
         public void addItem(Item Item, int quantity)
         {
-            LineItems.Add(new KeyValuePair<Item, int>( Item, quantity ));
+            LineItems.Add(new LineItem ( Item, quantity ));
+            TotalItems += quantity;
         }
     }
 }

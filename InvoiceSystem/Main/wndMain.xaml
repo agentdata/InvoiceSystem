@@ -64,7 +64,7 @@
             </DockPanel>
             <DockPanel Grid.Row="4">
                 <Label Content="Total Items Sold: " FontSize="15"/>
-                <Label Content="{Binding totalNumItems}" FontSize="15"/>
+                <Label Content="{Binding Invoices.totalItems}" FontSize="15"/>
             </DockPanel>
         </Grid>
     </Grid>

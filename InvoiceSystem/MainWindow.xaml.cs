@@ -71,7 +71,7 @@ namespace InvoiceSystem
 
         private void AddNewInvoiceMenuButton_Action(object sender, RoutedEventArgs e)
         {
-            viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(viewNavigationController));
+            viewNavigationController.ChangeCurrentView(new NewInvoice(viewNavigationController));
         }
 
         private void SearchInvoicesMenuButton_Action(object sender, RoutedEventArgs e)

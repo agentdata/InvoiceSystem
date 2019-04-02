@@ -1,6 +1,4 @@
-﻿using InvoiceSystem.Items;
-using InvoiceSystem.OtherClasses;
-using InvoiceSystem.Search;
+﻿using InvoiceSystem.OtherClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +17,9 @@ using System.Windows.Shapes;
 namespace InvoiceSystem.Main
 {
     /// <summary>
-    /// Interaction logic for AddNewInvoice.xaml
+    /// Interaction logic for NewInvoice.xaml
     /// </summary>
-    public partial class AddOrModifyInvoice : UserControl
+    public partial class NewInvoice : UserControl
     {
         private readonly ViewNavigationController viewNavigationController;
         private string NewOrEdit;
@@ -29,23 +27,12 @@ namespace InvoiceSystem.Main
 
         #region Constructors
 
-        public AddOrModifyInvoice(ViewNavigationController viewNavigationController)
+        public NewInvoice(ViewNavigationController viewNavigationController)
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
             NewOrEdit = "new";
             DataContext = this;
-        }
-
-        public AddOrModifyInvoice(ViewNavigationController viewNavigationController, Invoice invoice)
-        {
-            InitializeComponent();
-            this.viewNavigationController = viewNavigationController;
-            CurrentInvoice = invoice;
-            NewOrEdit = "edit";
-            
-            DataContext = this;
-
         }
         #endregion Constructors
 
@@ -65,11 +52,14 @@ namespace InvoiceSystem.Main
             //then return to main screen
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
+
+        private void CancelButton_Button(object sender, RoutedEventArgs e)
+        {
+            //Return to main screen
+            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+        }
         #endregion UI Actions
 
-        private void InvoiceRow_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
 
-        }
     }
 }

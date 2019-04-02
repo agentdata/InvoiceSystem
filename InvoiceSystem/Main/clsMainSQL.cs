@@ -18,7 +18,6 @@ namespace InvoiceSystem.Main
     {
         public static InvoiceList getAllInvoices(InvoiceList Invoices)
         {   
-            
             string strDSN = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source= " + Directory.GetCurrentDirectory() + "\\InvoiceDB.accdb";
             int Invoices_Rows = 0;
             int Item_Rows = 0;
@@ -143,7 +142,6 @@ namespace InvoiceSystem.Main
             }
 
             // do stuff with datasets
-
             // Load invoices with correct number of items for the order
             for (int i = 0; i < LineItem_Rows; i++)
             {
@@ -157,13 +155,16 @@ namespace InvoiceSystem.Main
                 
                 //find the invoice from invoices and add the item to it
                 Invoices.InvoicesCollection.Where(x => x.InvoiceNum == invoiceNum).FirstOrDefault().addItem(itemToAdd, Int32.Parse(Quantity));
-
             }
             #endregion Link Items To Invoices
 
             return Invoices;
         }
 
+        /// <summary>
+        /// Query to get the total items in the database
+        /// </summary>
+        /// <returns> an int representing the number of total items in the database</returns>
         internal static int totalItems()
         {
             string strDSN = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source= " + Directory.GetCurrentDirectory() + "\\InvoiceDB.accdb";

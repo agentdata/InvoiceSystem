@@ -67,7 +67,7 @@ namespace InvoiceSystem.Main
             if (row != null)
             {
                 Invoice selectedInvoice = row.Item as Invoice;
-                viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(this.viewNavigationController, selectedInvoice));
+                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, selectedInvoice));
             }
         }
         #endregion UI Action
@@ -82,9 +82,17 @@ namespace InvoiceSystem.Main
             
             if (row != null)
             {
-                
+                //trigger stats update
                 //Invoices.InvoicesCollection.Remove(Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault());
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void updateStats()
+        {
+
         }
 
         private void InvoiceRowRightClickEdit_Action(object sender, RoutedEventArgs e)
@@ -102,7 +110,7 @@ namespace InvoiceSystem.Main
             {
                 Invoice selectedInvoice = row.Item as Invoice;
 
-                viewNavigationController.ChangeCurrentView(new AddOrModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x=> x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
+                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x=> x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
 
             }
         }
