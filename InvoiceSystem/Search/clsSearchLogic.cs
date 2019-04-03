@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InvoiceSystem.Search
+namespace wndSearch
 {
     class clsSearchLogic
     {
+        //contains the business logic
+        public void SearchInvoiceNum()
+        {
+
+        }
     }
 }
