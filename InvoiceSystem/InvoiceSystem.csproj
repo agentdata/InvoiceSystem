@@ -70,6 +70,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\clsDataAccess.cs" />
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\Items.cs" />
     <Compile Include="Classes\LineItem.cs" />

@@ -9,4 +9,15 @@ namespace InvoiceSystem.Items
     class clsItemsLogic
     {
     }
+
+    //Dataset for grid
+
+
+    //get all items
+
+    //add item
+
+    //save item
+
+    //delete item
 }
