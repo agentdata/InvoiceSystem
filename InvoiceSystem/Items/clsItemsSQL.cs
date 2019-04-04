@@ -9,4 +9,13 @@ namespace InvoiceSystem.Items
     class clsItemsSQL
     {
     }
+
+    //get all items in dataset
+
+
+    //add item
+
+    //save item
+
+    //delete item
 }

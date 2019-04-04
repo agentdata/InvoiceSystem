@@ -2,6 +2,7 @@
 using InvoiceSystem.OtherClasses;
 using InvoiceSystem.Main;
 using InvoiceSystem.Items;
+using InvoiceSystem.Search;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace InvoiceSystem
 
         private void SearchInvoicesMenuButton_Action(object sender, RoutedEventArgs e)
         {
-            viewNavigationController.ChangeCurrentView(new Search.wndSearch(viewNavigationController));
+            viewNavigationController.ChangeCurrentView(new wndSearch(viewNavigationController));
         }
 
         private void EditItemsMenuButton_Action(object sender, RoutedEventArgs e)
