@@ -1,4 +1,5 @@
-﻿using InvoiceSystem.Items;
+﻿using InvoiceSystem.Classes;
+using InvoiceSystem.Items;
 using InvoiceSystem.OtherClasses;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,12 @@ namespace InvoiceSystem.Main
         #endregion Constructors
 
         #region UI Actions
+        /// <summary>
+        /// This is the submit button which will modify the invoice, really the only thing that can be modified in this setup is the quantity of item
+        /// so this button action updates the quantity of item in the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
             switch (NewOrEdit)
@@ -55,11 +62,17 @@ namespace InvoiceSystem.Main
             //then return to main screen
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
-        #endregion UI Actions
 
-        private void InvoiceRow_DoubleClick(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// This doubleclick action brings up a small item window which displays everything about the item selected.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RowItem_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            DataGridRow row = sender as DataGridRow;
+            if (row != null && row.Item != null) { (new ViewItemDesc((row.Item as LineItem).Item)).Show(); }
         }
+        #endregion UI Actions
     }
 }

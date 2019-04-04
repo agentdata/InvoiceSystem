@@ -17,8 +17,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!--Invoice list, double click action opens to view all details -->
-        <Grid Grid.Column="0" Grid.Row="1" Margin="5,0,5,5">
+        <!--This grid contains the Invoice list in a datagrid, double click action opens to view all details, left column of the window -->
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="0" Grid.Row="1" Margin="5,0,5,5">
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
@@ -39,13 +40,17 @@
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="20"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="20"/>
-                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="20"/>
+                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="20" Width="*"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="20" Width="auto"/>
+                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="20" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="1" Margin="5,0,5,5">
+        </Border>
+
+        <!-- This Grid contains the sales statistics, right column of the window -->
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -67,5 +72,6 @@
                 <Label Content="{Binding Invoices.totalItems}" FontSize="15"/>
             </DockPanel>
         </Grid>
+        </Border>
     </Grid>
 </UserControl>

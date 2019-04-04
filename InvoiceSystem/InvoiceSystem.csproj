@@ -89,6 +89,9 @@
     <Compile Include="Main\NewInvoice.xaml.cs">
       <DependentUpon>NewInvoice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main\ViewItemDesc.xaml.cs">
+      <DependentUpon>ViewItemDesc.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Main\wndMain.xaml.cs">
       <DependentUpon>wndMain.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Main\NewInvoice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Main\ViewItemDesc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

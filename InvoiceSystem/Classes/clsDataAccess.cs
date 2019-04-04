@@ -19,7 +19,7 @@ public class clsDataAccess
     /// </summary>
     public clsDataAccess()
     {
-        sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Books.mdb";
+        sConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source= " + Directory.GetCurrentDirectory() + "\\InvoiceDB.accdb";
     }
 
     /// <summary>

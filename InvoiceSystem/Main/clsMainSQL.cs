@@ -16,9 +16,15 @@ namespace InvoiceSystem.Main
 {
     public static class clsMainSQL
     {
+        /// <summary>
+        /// This function is used to get all the invoices in the database.
+        /// returns an InvoiceList which is built up by getting invoices, items then linking new LinItem objects to each invoice object.
+        /// </summary>
+        /// <param name="Invoices"></param>
+        /// <returns></returns>
         public static InvoiceList getAllInvoices(InvoiceList Invoices)
         {   
-            string strDSN = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source= " + Directory.GetCurrentDirectory() + "\\InvoiceDB.accdb";
+            clsDataAccess dataAccess = new clsDataAccess();
             int Invoices_Rows = 0;
             int Item_Rows = 0;
             int LineItem_Rows = 0;
@@ -33,32 +39,9 @@ namespace InvoiceSystem.Main
             ObservableCollection<Item> tempItemCollection = new ObservableCollection<Item>();
 
             #region Get Invoices
-            //get Flights dataset
-            try
-            {
-                using (OleDbConnection conn = new OleDbConnection(strDSN))
-                {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-                        //Open the connection to the database
-                        conn.Open();
+            //get Invoices dataset
 
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand("Select * from Invoices", conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Fill up the DataSet with data
-                        adapter.Fill(InvoicesDS);
-                    }
-                }
-
-                //Set the number of values returned
-                Invoices_Rows = InvoicesDS.Tables[0].Rows.Count;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
+            InvoicesDS = dataAccess.ExecuteSQLStatement("Select * from Invoices", ref Invoices_Rows);
 
             // do stuff with datasets
 
@@ -74,32 +57,9 @@ namespace InvoiceSystem.Main
             #endregion Get Invoices
 
             #region Get Items
-            //get Flights dataset
-            try
-            {
-                using (OleDbConnection conn = new OleDbConnection(strDSN))
-                {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-                        //Open the connection to the database
-                        conn.Open();
 
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand("Select * from ItemDesc", conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Fill up the DataSet with data
-                        adapter.Fill(ItemsDS);
-                    }
-                }
-
-                //Set the number of values returned
-                Item_Rows = ItemsDS.Tables[0].Rows.Count;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
+            //get Item Descriptions dataset
+            ItemsDS = dataAccess.ExecuteSQLStatement("Select * from ItemDesc", ref Item_Rows);
 
             // do stuff with datasets
             //add items to temporary collection
@@ -115,31 +75,8 @@ namespace InvoiceSystem.Main
 
             #region Link Items To Invoices
             //get Flights dataset
-            try
-            {
-                using (OleDbConnection conn = new OleDbConnection(strDSN))
-                {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-                        //Open the connection to the database
-                        conn.Open();
 
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand("Select * from LineItems", conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Fill up the DataSet with data
-                        adapter.Fill(ItemLinkDS);
-                    }
-                }
-
-                //Set the number of values returned
-                LineItem_Rows = ItemLinkDS.Tables[0].Rows.Count;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
+            ItemLinkDS = dataAccess.ExecuteSQLStatement("Select * from LineItems", ref LineItem_Rows);
 
             // do stuff with datasets
             // Load invoices with correct number of items for the order
@@ -167,41 +104,12 @@ namespace InvoiceSystem.Main
         /// <returns> an int representing the number of total items in the database</returns>
         internal static int totalItems()
         {
-            string strDSN = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source= " + Directory.GetCurrentDirectory() + "\\InvoiceDB.accdb";
             int ItemDescRows = 0;
 
             //Create a new DataSet for flights
             DataSet itemDescRowsDS = new DataSet();
-            #region Get Item Rows
-
-            //get Flights dataset
-            try
-            {
-                using (OleDbConnection conn = new OleDbConnection(strDSN))
-                {
-                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
-                    {
-                        //Open the connection to the database
-                        conn.Open();
-
-                        //Add the information for the SelectCommand using the SQL statement and the connection object
-                        adapter.SelectCommand = new OleDbCommand("Select * from ItemDesc", conn);
-                        adapter.SelectCommand.CommandTimeout = 0;
-
-                        //Fill up the DataSet with data
-                        adapter.Fill(itemDescRowsDS);
-                    }
-                }
-
-                //Set the number of values returned
-                ItemDescRows = itemDescRowsDS.Tables[0].Rows.Count;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-            #endregion
-
+            //Set DS as the return value from 
+            itemDescRowsDS =  new clsDataAccess().ExecuteSQLStatement("Select * from ItemDesc", ref ItemDescRows);
             return ItemDescRows;
         }
     }

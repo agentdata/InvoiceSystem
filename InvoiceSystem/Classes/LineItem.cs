@@ -8,8 +8,8 @@ namespace InvoiceSystem.Classes
 {
     public class LineItem
     {
-        Item Item { get; set; }
-        int Quantity { get; set; }
+        public Item Item { get; set; }
+        public int Quantity { get; set; }
 
         public LineItem(Item Item, int Quantity)
         {

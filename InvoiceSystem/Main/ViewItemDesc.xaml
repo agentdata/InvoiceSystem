@@ -1,0 +1,40 @@
+﻿<Window x:Class="InvoiceSystem.Main.ViewItemDesc"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InvoiceSystem.Main"
+        mc:Ignorable="d"
+        Title="ViewItemDesc" Height="200" Width="400" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- The labels identifying the bound elements displayed to the right-->
+        <Label Content="Item Code" Grid.Column="1" Grid.Row="1"/>
+        <Label Content="Item Description" Grid.Column="1" Grid.Row="2"/>
+        <Label Content="Item Cost" Grid.Column="1" Grid.Row="3"/>
+
+        <!-- The bound item elements-->
+        <Label Content="{Binding SelectedItem.ItemCode}" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="{Binding SelectedItem.ItemDesc}" Grid.Column="2" Grid.Row="2"/>
+        <Label Content="{Binding SelectedItem.Cost}" Grid.Column="2" Grid.Row="3"/>
+        
+        <!-- Large close button to close this window-->
+        <Button Content="Close" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" FontSize="20" Click="CloseButton_Action"/>
+
+    </Grid>
+</Window>

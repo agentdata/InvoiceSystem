@@ -53,10 +53,10 @@ namespace InvoiceSystem.Main
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
 
-        private void CancelButton_Button(object sender, RoutedEventArgs e)
+        private void ResetButton_Button(object sender, RoutedEventArgs e)
         {
-            //Return to main screen
-            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+            //Return reset the screen screen
+            viewNavigationController.ChangeCurrentView(new NewInvoice(viewNavigationController));
         }
         #endregion UI Actions
 

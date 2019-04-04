@@ -25,11 +25,14 @@ namespace InvoiceSystem.Main
     public partial class wndMain : UserControl
     {
         #region Fields
+        //Navigation controller which is passed around so that the view can be updated.
         private readonly ViewNavigationController viewNavigationController;
         #endregion Fields
 
         #region Properties
+        //List of all invoices pulled when this view is initialized, used to populate the datagrid in the view.
         public InvoiceList Invoices { get; set; } = new InvoiceList();
+        //This number is queried when the view is initialized, it is to show the total number of items in the database for the stats column.
         public int totalNumItems { get { return clsMainSQL.totalItems(); } }
         #endregion Properties
 
@@ -56,10 +59,15 @@ namespace InvoiceSystem.Main
         {
             Invoices = clsMainSQL.getAllInvoices(Invoices);
         }
-
         #endregion
 
         #region UI Action
+        /// <summary>
+        /// Double CLick action for the datagrid displaying the invoices.
+        /// Double clicking will pass the selected invoice to a new modifyinvoice window and the user can then update the items, or item quantity.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InvoiceRow_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow row = sender as DataGridRow;
@@ -69,30 +77,13 @@ namespace InvoiceSystem.Main
                 viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, selectedInvoice));
             }
         }
-        #endregion UI Action
-
-
-        private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
-        {
-            DataGridRow row = sender as DataGridRow;
-            //Invoice selectedInvoice = row.Item as Invoice;
-            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #"+ sender.GetType(),"Delete Invoice?",MessageBoxButton.YesNo);
-            
-            if (row != null)
-            {
-                //trigger stats update
-                //Invoices.InvoicesCollection.Remove(Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault());
-            }
-        }
 
         /// <summary>
-        /// 
+        /// Edit action when a row is right clicked and edit is selected.
+        /// This will pass the selected invoice to a new modifyInvoice window and the user can then update the items, or item quantity.
         /// </summary>
-        private void updateStats()
-        {
-
-        }
-
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void InvoiceRowRightClickEdit_Action(object sender, RoutedEventArgs e)
         {
             //Get the clicked MenuItem
@@ -107,8 +98,29 @@ namespace InvoiceSystem.Main
             if (row != null)
             {
                 Invoice selectedInvoice = row.Item as Invoice;
-                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x=> x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
+                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x => x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
             }
         }
+
+        /// <summary>
+        /// Delete action when a row is right clicked and delete is selected.
+        /// The user will get a confirmation screen
+        /// This will delete the invoice from the database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            //Invoice selectedInvoice = row.Item as Invoice;
+            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #" + sender.GetType(), "Confirm Delete Invoice?", MessageBoxButton.YesNo);
+
+            if (row != null)
+            {
+                //trigger stats update
+                //Invoices.InvoicesCollection.Remove(Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault());
+            }
+        }
+        #endregion UI Action
     }
 }
