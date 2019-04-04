@@ -47,8 +47,16 @@
 
             <DataGrid Name="existingLineItem_DataGrid" ItemsSource="{Binding CurrentInvoice.LineItems}">
                 <DataGrid.Resources>
+                    <ContextMenu x:Key="RightClick_ContextMenu">
+                        <MenuItem Header="_Edit" />
+                        <MenuItem Header="_Delete" Icon="/Images/Menu_Icons/delete.png"/>
+                    </ContextMenu>
                     <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
                         <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                    </Style>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseDoubleClick" Handler="InvoiceRow_DoubleClick"/>
+                        <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
                     </Style>
                 </DataGrid.Resources>
                 
