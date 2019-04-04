@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-namespace wndSearch
+namespace InvoiceSystem.Search
 {
     class InvoiceData
     {

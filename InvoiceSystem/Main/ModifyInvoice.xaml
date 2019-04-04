@@ -21,7 +21,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!--Unchangeable invoice info, for passed in invoices only. new -->
+        <!--Unchangeable invoice info-->
         <DockPanel Grid.Column="0" Grid.Row="0" Name="InvoiceNumber_DockPanel">
             <Label Content="Invoice Number:" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBox IsEnabled="False" Text="{Binding CurrentInvoice.InvoiceNum}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -45,7 +45,7 @@
                TextAlignment="Center"
                DockPanel.Dock="Top" />
 
-            <DataGrid Name="existingLineItem_DataGrid" ItemsSource="{Binding CurrentInvoice.LineItems}">
+            <DataGrid Name="existingLineItem_DataGrid" ItemsSource="{Binding Path=CurrentInvoice.LineItems, Mode=TwoWay}">
                 <DataGrid.Resources>
                     <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
                         <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
@@ -53,9 +53,9 @@
                 </DataGrid.Resources>
                 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Item Code" Binding="{Binding LineItem.Item.ItemCode}" IsReadOnly="True" />
-                    <DataGridTextColumn Header="Item Price" Binding="{Binding LineItem.Item.Cost}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding LineItem.Quantity}" IsReadOnly="False"/>
+                    <DataGridTextColumn Header="Item Code" Binding="{Binding LineItem.Item.ItemCode}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Item Price" Binding="{Binding LineItem.Item.Cost}" IsReadOnly="True" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Path=LineItem.Quantity, ValidatesOnExceptions=True}" IsReadOnly="False" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

@@ -20,15 +20,17 @@ namespace InvoiceSystem.OtherClasses
     /// </summary>
     public partial class AboutWindow : Window
     {
+        public string aboutWindowText { get; set; }
         public AboutWindow()
         {
             InitializeComponent();
-            loadText();
-        }
-        
-        private void loadText()
-        {
-            aboutText_TextBox.Text = "This invoice system was created as a group project.";
+            aboutWindowText = "This App was written by Brantly, Juan and Walker\n\n" +
+                              "Main Window Created by Brantly\n" +
+                              "Invoice Search Created by Juan\n" +
+                              "Items Window Created by Walker.";
+                              
+            DataContext = this;
+
         }
     }
 }

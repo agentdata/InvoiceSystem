@@ -5,9 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvoiceSystem.OtherClasses"
         mc:Ignorable="d"
-        Title="AboutWindow" Height="200" Width="200">
+        Title="About Invoice System App" Height="300" Width="300" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
 
-        <TextBox Name="aboutText_TextBox" />
+        <Label Name="aboutText_TextBox" Content="{Binding aboutWindowText}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <Label.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="TextWrapping" Value="Wrap" />
+                </Style>
+            </Label.Resources>
+        </Label>
     </Grid>
 </Window>

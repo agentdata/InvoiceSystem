@@ -14,7 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using InvoiceSystem.Search;
 using InvoiceSystem.Items;
 using System.Data;
 
@@ -75,7 +74,6 @@ namespace InvoiceSystem.Main
 
         private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
         {
-
             DataGridRow row = sender as DataGridRow;
             //Invoice selectedInvoice = row.Item as Invoice;
             MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #"+ sender.GetType(),"Delete Invoice?",MessageBoxButton.YesNo);
@@ -109,9 +107,7 @@ namespace InvoiceSystem.Main
             if (row != null)
             {
                 Invoice selectedInvoice = row.Item as Invoice;
-
                 viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x=> x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
-
             }
         }
     }

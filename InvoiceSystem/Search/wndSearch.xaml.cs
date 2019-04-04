@@ -35,5 +35,6 @@ namespace InvoiceSystem.Search
         {
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
+
     }
 }

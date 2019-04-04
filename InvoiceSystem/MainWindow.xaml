@@ -16,7 +16,6 @@
         <!-- Menu bar-->
         <DockPanel >
             <Menu DockPanel.Dock="Top">
-                
                 <MenuItem Header="_File">
                     <MenuItem Header="Settings"/>
                         <Separator/>
@@ -31,9 +30,7 @@
                 </MenuItem>
                 <MenuItem Header="_Items">
                     <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action"/>
-                        <Separator/>
-                    <MenuItem Header="New Item" Click="AddNewInvoiceMenuButton_Action"/>
-                    
+                        <Separator/>                    
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/> 

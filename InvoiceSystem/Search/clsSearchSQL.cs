@@ -6,8 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Reflection;
+using InvoiceSystem.Search;
 
-namespace wndSearch
+namespace InvoiceSystem.Search
 {
     class clsSearchSQL
     {

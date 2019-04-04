@@ -101,6 +101,8 @@
     <Compile Include="Classes\ViewNavigationController.cs" />
     <Compile Include="Search\clsSearchLogic.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
+    <Compile Include="Search\InvoiceData.cs" />
+    <Compile Include="Search\InvoiceInfo.cs" />
     <Compile Include="Search\wndSearch.xaml.cs">
       <DependentUpon>wndSearch.xaml</DependentUpon>
     </Compile>
