@@ -104,22 +104,59 @@ namespace InvoiceSystem.Search
             }
             return Invoices;
         }
-        
-        public void  getInvoice()
+
+        /// <summary>
+        /// for the search if only the InvoiceNum ComboBox is used
+        /// </summary>
+        /// <param name="selected">the selected value from the combobox</param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchInvoiceNumbers(string selected)
         {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
             DataSet ds;
             int res = 0;
-            string SQLStatment = "SELECT * FROM Invoices";
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + selected;
             ds = db.ExecuteSQLStatement(SQLStatment, ref res);
-
             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                InvoiceData.addInvoices(
-                    ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    ds.Tables[0].Rows[i]["TotalCosts"].ToString()
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
                     );
             }
+            return Invoices;
+
+        }
+
+        /// <summary>
+        /// does a search of the totalcosts chosen by the user and returns any Invoices from the database
+        /// </summary>
+        /// <param name="selected"></param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchTotalCosts(string selected)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE TotalCost = " + selected;
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+
         }
     }
 }
