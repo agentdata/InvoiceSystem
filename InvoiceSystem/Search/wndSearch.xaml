@@ -8,8 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Loaded="Grid_Loaded">
 
-        <ComboBox x:Name="InvoiceNumbersBox" HorizontalAlignment="Left" Margin="39,57,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="InvoiceNumbersBox_SelectionChanged"/>
-        <ComboBox x:Name="TotalCostsBox" Text ="{Binding Path= InvoiceInfo.TotalCosts}"  HorizontalAlignment="Left" Margin="539,57,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="TotalCostsBox_SelectionChanged"/>
+        <ComboBox x:Name="InvoiceNumbersBox" 
+                  DisplayMemberPath="InvoiceNumber" SelectedValuePath="InvoiceNumber"
+                  SelectedValue="{Binding InvoiceInfo.InvoiceNumber,Mode=TwoWay}" HorizontalAlignment="Left" Margin="39,57,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="InvoiceNumbersBox_SelectionChanged"/>
+        <ComboBox x:Name="TotalCostsBox" SelectedValue="{Binding InvoiceInfo.TotalCosts, Mode=TwoWay}"
+                  DisplayMemberPath="TotalCosts" SelectedValuePath="TotalCosts" HorizontalAlignment="Left" Margin="539,57,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="TotalCostsBox_SelectionChanged"/>
 
         <DatePicker x:Name="Date" HorizontalAlignment="Left" Margin="317,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.851,1.341"/>
 
