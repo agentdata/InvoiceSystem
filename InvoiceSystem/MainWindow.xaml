@@ -7,37 +7,53 @@
         mc:Ignorable="d" Title="Invoice System"
         Width="800" Height="600" WindowStartupLocation="CenterScreen">
 
-    <Grid>
+    <Grid Name="MainViewGrid_Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Menu bar-->
-        <DockPanel >
-            <Menu DockPanel.Dock="Top">
+        <DockPanel Name="Menu_DockPanel" >
+            <Menu DockPanel.Dock="Top"  MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
                 <MenuItem Header="_File">
-                    <MenuItem Header="Settings" Click="MenuBarSettingsButton_Action"/>
-                        <Separator/>
+                    <MenuItem Header="Settings" />
+                    <Separator/>
                     <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
                 </MenuItem>
                 <MenuItem Header="_Invoices">
                     <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action"/>
-                        <Separator/>
+                    <Separator/>
                     <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
-                        <Separator/>
+                    <Separator/>
                     <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
                 </MenuItem>
                 <MenuItem Header="_Items">
                     <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action"/>
-                        <Separator/>                    
                 </MenuItem>
                 <MenuItem Header="_Help">
-                    <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/> 
+                    <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/>
                 </MenuItem>
             </Menu>
         </DockPanel>
 
-        <ContentPresenter Grid.Row="1" Content="{Binding MainView, Mode=OneWay}"/>
+        <!-- This contentpresenter is what is bound to the mainview and 
+        is what each user control modifies to show itself in this window-->
+        <ContentPresenter Name="MainContentPresenter_ContentPresenter" Grid.Row="1" Content="{Binding MainView, Mode=OneWay}" IsEnabledChanged="ChangeDisabledForegroundAndOpacity_Action">
+            <!--Set color and opacity when this contentpresenter isEnabled is set to false--><!--
+            <ContentPresenter.Style>
+                <Style>
+                    <Style.Triggers>
+                        
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger   >
+                    </Style.Triggers>
+                </Style>
+            </ContentPresenter.Style>-->
+
+        </ContentPresenter>
+
+        <Label Name = "OpaqueContentCover_Label" Visibility="Hidden"  Background = "Black" Grid.Row = "1" Opacity = "0.45"/>
     </Grid>
 </Window>

@@ -98,16 +98,6 @@ namespace InvoiceSystem.Main
             return Invoices;
         }
 
-        internal static void addNewLineItemSQL(string InvoiceNum, LineItem lineItem, string LineItemNum, int Quantity)
-        {
-            //delete line item
-            string sqlCommand = " INSERT INTO LineItems (InvoiceNum,LineItemNum, ItemCode, Quantity) " +
-                                                "VALUES ('" + InvoiceNum + "', '" + LineItemNum +  "', '" + lineItem.Item.ItemCode + "', '" + Quantity + "')";
-
-
-            new clsDataAccess().ExecuteNonQuery(sqlCommand);
-        }
-
         /// <summary>
         /// Query to get the total items in the database
         /// </summary>
@@ -202,5 +192,34 @@ namespace InvoiceSystem.Main
         {
             new clsDataAccess().ExecuteNonQuery("UPDATE Invoices SET TotalCost ="+TotalCost+" WHERE InvoiceNum=" + InvoiceNum);
         }
+
+        #region Insert Commands
+        public static void InsertInvoice(string invoiceNum, int totalCost)
+        {
+            //delete line item
+            //string sqlCommand = " INSERT INTO Invoices (InvoiceNum, InvoiceDate, ItemCode, Quantity) " +
+            //                                    "VALUES ('" + InvoiceNum + "', '" + LineItemNum + "', '" + lineItem.Item.ItemCode + "', '" + Quantity + "')";
+
+
+            //new clsDataAccess().ExecuteNonQuery(sqlCommand);
+        }
+
+        /// <summary>
+        /// Add a new lineitem with the specified invoicenum, itemcode and quantity.
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="lineItem"></param>
+        /// <param name="LineItemNum"></param>
+        /// <param name="Quantity"></param>
+        internal static void addNewLineItemSQL(string InvoiceNum, LineItem lineItem, string LineItemNum, int Quantity)
+        {
+            //delete line item
+            string sqlCommand = " INSERT INTO LineItems (InvoiceNum,LineItemNum, ItemCode, Quantity) " +
+                                                "VALUES ('" + InvoiceNum + "', '" + LineItemNum + "', '" + lineItem.Item.ItemCode + "', '" + Quantity + "')";
+
+
+            new clsDataAccess().ExecuteNonQuery(sqlCommand);
+        }
+        #endregion Insert Commands
     }
 }

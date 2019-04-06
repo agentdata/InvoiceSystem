@@ -9,7 +9,7 @@
     <Grid>
         <!--Grid Definitions-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -17,8 +17,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Label Content="Invoice System Dashboard" Grid.Row="0" FontSize="30" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
         <!--This grid contains the Invoice list in a datagrid, double click action opens to view all details, left column of the window -->
-        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="0" Grid.Row="1" Margin="5,0,5,5">
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="0" Grid.Row="2" Margin="5,0,5,5">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -50,7 +51,7 @@
         </Border>
 
         <!-- This Grid contains the sales statistics, right column of the window -->
-        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5">
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.Row="2" Margin="5,0,5,5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

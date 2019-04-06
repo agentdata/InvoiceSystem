@@ -77,6 +77,7 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
+            
             foreach (LineItem LineItem in newLineItems)
             {
                 //add new lineitem
@@ -92,7 +93,10 @@ namespace InvoiceSystem.Main
 
             //add new line item
             //update the invoice total cost.
-            clsMainLogic.updateInvoiceTotalCost(CurrentInvoice);
+            if (newLineItems.Count > 0 || updateLineItems.Count > 0)
+            {
+                clsMainLogic.updateInvoiceTotalCost(CurrentInvoice);
+            }
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
 
