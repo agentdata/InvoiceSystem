@@ -14,7 +14,7 @@
         <ComboBox x:Name="TotalCostsBox" SelectedValue="{Binding InvoiceInfo.TotalCosts, Mode=TwoWay}"
                   DisplayMemberPath="TotalCosts" SelectedValuePath="TotalCosts" HorizontalAlignment="Left" Margin="539,57,0,0" VerticalAlignment="Top" Width="150" SelectionChanged="TotalCostsBox_SelectionChanged"/>
 
-        <DatePicker x:Name="Date" HorizontalAlignment="Left" Margin="317,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.851,1.341"/>
+        <DatePicker x:Name="InvoiceDate" HorizontalAlignment="Left" Margin="317,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.851,1.341" SelectedDateChanged="InvoiceDate_SelectedDateChanged"/>
 
         <DataGrid x:Name="InvoiceDataGrid" HorizontalAlignment="Left" CanUserAddRows="False" AutoGenerateColumns="False" Height="210" Margin="39,240,0,0" VerticalAlignment="Top" Width="650">
             <DataGrid.Columns>

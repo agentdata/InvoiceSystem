@@ -107,9 +107,9 @@ namespace InvoiceSystem.Search
         /// </summary>
         public void resetSearch()
         {
-            InvoiceNumber = "";
-            InvoiceDate = "";//set to a default date // temp for now 
-            TotalCost = "";
+            InvoiceNumber = null;
+            InvoiceDate = null;//set to a default date // temp for now 
+            TotalCost = null;
         }
     }
 }

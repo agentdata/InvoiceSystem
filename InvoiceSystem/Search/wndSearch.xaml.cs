@@ -44,12 +44,6 @@ namespace InvoiceSystem.Search
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
 
-        public void setDate()
-        {
-            // not sure if this is correct
-            logic.getDate = Date.SelectedDate.ToString();
-        }
-
         //loads the Invoice info from the DataBase
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -71,9 +65,8 @@ namespace InvoiceSystem.Search
         /// <param name="e"></param>
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            logic.getCosts = "";
-            logic.getDate = "";//set to a default date
-            logic.getNumber = "";
+            //resets for a new search 
+            logic.resetSearch();  
             //set the datagrid back to how it was when the window first opens
             InvoiceDataGrid.ItemsSource = Sql.GetInvoices();
         }
@@ -82,14 +75,15 @@ namespace InvoiceSystem.Search
         {
             if (startsearch == true)
             {
-                //invoice number searches
-                if (logic.SearchInvoiceNum() == true)
+                //search invoice number, invoice date and the total costs
+                if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true && logic.SearchTotalCosts() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceNumbers(logic.getNumber);
-                    //reset the search for new search 
+                    InvoiceDataGrid.ItemsSource = Sql.SearchAll(logic.getNumber, logic.getDate, logic.getCosts);
+                    //reset the search
                     logic.resetSearch();
                     startsearch = false;
                 }
+
                 //search invoice numbers and invoice date
                 else if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true)
                 {
@@ -99,22 +93,15 @@ namespace InvoiceSystem.Search
                     startsearch = false;
                 }
 
-                //search invoice number, invoice date and the total costs
-                else if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true && logic.SearchTotalCosts() == true)
-                {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchAll(logic.getNumber, logic.getDate, logic.getCosts);
-                    //reset the search
-                    logic.resetSearch();
-                    startsearch = false;
-                }
 
-                //search the total costs 
-                else if (logic.SearchTotalCosts() == true)
+                //search invoice number and total costs
+                else if (logic.SearchInvoiceNum() == true && logic.SearchTotalCosts() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchTotalCosts(logic.getCosts);
+                    InvoiceDataGrid.ItemsSource = Sql.SearchNumber_Cost(logic.getNumber, logic.getCosts);
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
+
                 }
 
                 //search date and total costs
@@ -122,6 +109,15 @@ namespace InvoiceSystem.Search
                 {
                     InvoiceDataGrid.ItemsSource = Sql.SearchDate_Cost(logic.getDate, logic.getCosts);
                     //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
+                //invoice number searches
+                else if (logic.SearchInvoiceNum() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceNumbers(logic.getNumber);
+                    //reset the search for new search 
                     logic.resetSearch();
                     startsearch = false;
                 }
@@ -134,6 +130,17 @@ namespace InvoiceSystem.Search
                     logic.resetSearch();
                     startsearch = false;
                 }
+
+
+                //search the total costs 
+                else if (logic.SearchTotalCosts() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchTotalCosts(logic.getCosts);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
 
             }
 
@@ -167,6 +174,21 @@ namespace InvoiceSystem.Search
         {
             logic.getCosts = TotalCostsBox.SelectedValue.ToString();
             startsearch = true;
+        }
+
+        /// <summary>
+        /// this sets the date for the search 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InvoiceDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? date = InvoiceDate.SelectedDate;
+            if (date.HasValue)
+            {
+                logic.getDate = date.Value.ToShortDateString();
+                startsearch = true;
+            }
         }
     }
 
