@@ -25,6 +25,7 @@ namespace InvoiceSystem.Search
         //attributes
         clsSearchSQL Sql;
         clsSearchLogic logic;
+        bool startsearch;
 
         //Fields
         private readonly ViewNavigationController viewNavigationController;
@@ -35,6 +36,7 @@ namespace InvoiceSystem.Search
             this.viewNavigationController = viewNavigationController;
             Sql = new clsSearchSQL();
             logic = new clsSearchLogic();
+            startsearch = false;
         }
 
         private void ReturnToMainButton_Action(object sender, RoutedEventArgs e)
@@ -78,10 +80,68 @@ namespace InvoiceSystem.Search
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (logic.SearchInvoiceNum() == true)
+            if (startsearch == true)
             {
-                InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceNumbers(logic.getNumber);
+                //invoice number searches
+                if (logic.SearchInvoiceNum() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceNumbers(logic.getNumber);
+                    //reset the search for new search 
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+                //search invoice numbers and invoice date
+                else if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchNumber_Date(logic.getNumber, logic.getDate);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
 
+                //search invoice number, invoice date and the total costs
+                else if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true && logic.SearchTotalCosts() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchAll(logic.getNumber, logic.getDate, logic.getCosts);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
+                //search the total costs 
+                else if (logic.SearchTotalCosts() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchTotalCosts(logic.getCosts);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
+                //search date and total costs
+                else if (logic.SearchTotalCosts() == true && logic.SearchDate() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchDate_Cost(logic.getDate, logic.getCosts);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
+                //search the date 
+                else if (logic.SearchDate() == true)
+                {
+                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceDates(logic.getDate);
+                    //reset the search
+                    logic.resetSearch();
+                    startsearch = false;
+                }
+
+            }
+
+            //show a messagebox if startsearch if false
+            else
+            {
+                MessageBox.Show("Please choose a search filter to start the search", "Alert"
+                    , MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
 
@@ -94,6 +154,7 @@ namespace InvoiceSystem.Search
         private void InvoiceNumbersBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             logic.getNumber = InvoiceNumbersBox.Items.GetItemAt(InvoiceNumbersBox.SelectedIndex).ToString();
+            startsearch = true;
         }
 
         /// <summary>
@@ -105,8 +166,8 @@ namespace InvoiceSystem.Search
         private void TotalCostsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             logic.getCosts = TotalCostsBox.Items.GetItemAt(TotalCostsBox.SelectedIndex).ToString();
+            startsearch = true;
         }
     }
 
-}
 }

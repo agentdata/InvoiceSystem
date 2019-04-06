@@ -105,6 +105,23 @@ namespace InvoiceSystem.Search
             return Invoices;
         }
 
+        public void getInvoice()
+        {
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices";
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                InvoiceData.addInvoices(
+                    ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    ds.Tables[0].Rows[i]["TotalCosts"].ToString()
+                    );
+            }
+        }
+
         /// <summary>
         /// for the search if only the InvoiceNum ComboBox is used
         /// </summary>
@@ -158,5 +175,141 @@ namespace InvoiceSystem.Search
             return Invoices;
 
         }
+
+        /// <summary>
+        /// takes the selected date from the user and returns observable collection from database 
+        /// </summary>
+        /// <param name="selected">passed in date </param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchInvoiceDates(string selected)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + selected + "#";
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+        }
+
+        /// <summary>
+        /// does the search if the date and the invoice number are selected
+        /// </summary>
+        /// <param name="num">selected invoice number</param>
+        /// <param name="date">selected invoice date</param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchNumber_Date(string num, string date)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #" + date + "#";
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+        }
+
+        /// <summary>
+        /// does the search if the invoice number and total cost are selected
+        /// </summary>
+        /// <param name="num">invoice number</param>
+        /// <param name="cost">total cost</param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchNumber_Cost(string num, string cost)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND TotalCost = " + cost;
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+        }
+
+        /// <summary>
+        /// does the search if there is more than all invoice number, invoice date, and total cost are selected
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchAll(string num, string date, string cost)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #"
+                + date + "# " + "AND TotalCost = " + cost;
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+        }
+
+        /// <summary>
+        /// does the search if the date and totalcost are selected
+        /// </summary>
+        /// <param name="date">invoice date</param>
+        /// <param name="cost">total cost</param>
+        /// <returns></returns>
+        public ObservableCollection<InvoiceInfo> SearchDate_Cost(string date, string cost)
+        {
+            Invoices = new ObservableCollection<InvoiceInfo>();
+
+            DataSet ds;
+            int res = 0;
+            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "# " + "AND TotalCost = " + cost;
+            ds = db.ExecuteSQLStatement(SQLStatment, ref res);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                Invoices.Add(new InvoiceInfo
+                {
+                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                }
+                    );
+            }
+            return Invoices;
+        }
+
     }
 }

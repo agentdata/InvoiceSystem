@@ -59,11 +59,14 @@ namespace InvoiceSystem.Search
         /// </summary>
         public bool SearchInvoiceNum()
         {
-            if (InvoiceNumber == "")
+            if (InvoiceNumber != null)
+            {
+                return true;
+            }
+            else
             {
                 return false;
             }
-            return true;
         }
 
         /// <summary>
@@ -73,11 +76,14 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public bool SearchTotalCosts()
         {
-            if (TotalCost == "")
+            if (TotalCost != null)
+            {
+                return true;
+            }
+            else
             {
                 return false;
             }
-            return true;
         }
 
         /// <summary>
@@ -86,12 +92,24 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public bool SearchDate()
         {
-            if (InvoiceDate == "")//temp for the default date
+            if (InvoiceDate != null)//temp for the default date
+            {
+                return true;
+            }
+            else
             {
                 return false;
             }
-            return true;
         }
-    
+
+        /// <summary>
+        /// reset the variables for a new search 
+        /// </summary>
+        public void resetSearch()
+        {
+            InvoiceNumber = "";
+            InvoiceDate = "";//set to a default date // temp for now 
+            TotalCost = "";
+        }
     }
 }
