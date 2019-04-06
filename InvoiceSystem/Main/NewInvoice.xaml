@@ -8,6 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -20,8 +21,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Border BorderBrush="Black" BorderThickness="2" Grid.ColumnSpan="3" Margin="5,0,5,0">
+        <Label  Content="New Invoice" FontSize="30" HorizontalContentAlignment="Center"/>
+        </Border>
         <!-- Shopping cart-->
-        <Border BorderBrush="Black" BorderThickness="2" Grid.RowSpan="3" Margin="10,10,0,0">
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Row="1" Grid.RowSpan="3" Margin="10,10,0,0">
             <DockPanel LastChildFill="True"  Name="ShoppingCart_DataGrid" >
                 <TextBlock Text="Selected Items"
                Background="Blue"
@@ -54,7 +58,7 @@
         </Border>
 
         <!-- Available Items-->
-        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10,10,10,0">
+        <Border BorderBrush="Black"  Grid.Row="1" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10,10,10,0">
             <DockPanel LastChildFill="True"  >
                 <TextBlock Text="Available Items"
                Background="Blue"
@@ -85,7 +89,7 @@
                 </DataGrid>
             </DockPanel>
         </Border>
-        <DockPanel Grid.Row="3" Grid.Column="0">
+        <DockPanel Grid.Row="4" Grid.Column="0">
             <Label Content="Running Total"  DockPanel.Dock="Left" VerticalContentAlignment="Center"/>
             <Label Content="{Binding runningTotal}"  VerticalContentAlignment="Center"/>
         </DockPanel>

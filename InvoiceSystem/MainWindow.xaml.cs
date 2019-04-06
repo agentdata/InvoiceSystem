@@ -96,10 +96,47 @@ namespace InvoiceSystem
 
         private void MenuBarAboutItem_Action(object sender, RoutedEventArgs e)
         {
-            AboutWindow window = new AboutWindow();
+            MainContentPresenter_ContentPresenter.IsEnabled = false;
+            Menu_DockPanel.IsEnabled = false;
+
+            AboutWindow window = new AboutWindow(ref MainContentPresenter_ContentPresenter, ref Menu_DockPanel);
+
             window.Show();
         }
 
         #endregion Menu Buttons
+
+        #region UI 
+        private void MenuBarSettingsButtonDeFocus_Action(object sender, MouseEventArgs e)
+        {
+            MainContentPresenter_ContentPresenter.IsEnabled = true;
+            if (!Menu_DockPanel.IsEnabled)
+            {
+                Menu_DockPanel.IsEnabled = true;
+            }
+        }
+
+        private void MenuBarSettingsButtonFocus_Action(object sender, MouseEventArgs e)
+        {
+            MainContentPresenter_ContentPresenter.IsEnabled = false;
+            if (!Menu_DockPanel.IsEnabled)
+            {
+                Menu_DockPanel.IsEnabled = true;
+            }
+        }
+
+        private void ChangeDisabledForegroundAndOpacity_Action(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (MainContentPresenter_ContentPresenter.IsEnabled)
+            {
+                OpaqueContentCover_Label.Visibility = Visibility.Hidden;
+                
+            }
+            else
+            {
+                OpaqueContentCover_Label.Visibility = Visibility.Visible;
+            }
+        }
+        #endregion UI
     }
 }
