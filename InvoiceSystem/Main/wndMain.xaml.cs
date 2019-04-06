@@ -111,15 +111,22 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
         {
-            DataGridRow row = sender as DataGridRow;
-            //Invoice selectedInvoice = row.Item as Invoice;
-            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #" + sender.GetType(), "Confirm Delete Invoice?", MessageBoxButton.YesNo);
+            //Get the clicked MenuItem
+            var menuItem = (MenuItem)sender;
 
-            if (row != null)
+            //Get the ContextMenu to which the menuItem belongs
+            var contextMenu = (ContextMenu)menuItem.Parent;
+
+            //Find the placementTarget
+            var row = (DataGridRow)contextMenu.PlacementTarget;
+            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #" + row.GetType(), "Confirm Delete Invoice?", MessageBoxButton.YesNo);
+
+            if (row != null && shouldBeDeleted == MessageBoxResult.Yes)
             {
-                //trigger stats update
-                //Invoices.InvoicesCollection.Remove(Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault());
+                clsMainSQL.deleteInvoice(row.Item as Invoice);
             }
+            //trigger stats update by just reloading the view
+            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
         #endregion UI Action
     }

@@ -9,6 +9,7 @@ namespace InvoiceSystem.OtherClasses
 {
     public class InvoiceList
     {
+        #region Properties
         public ObservableCollection<Invoice> InvoicesCollection { get; set; } = new ObservableCollection<Invoice>();
         public int totalInvoices { get { return InvoicesCollection.Count(); } }
         public int totalItems
@@ -23,14 +24,22 @@ namespace InvoiceSystem.OtherClasses
                 return totalNumItems;
             }
         }
-        public InvoiceList()
-        {
-
-        }
-        
+        public int totalRevenue { get; set; } = 0;
+        #endregion Properties
+                
+        /// <summary>
+        /// Use this function when adding new invoice to the list, don't directly modify invoices collection outside of this function
+        /// </summary>
+        /// <param name="Invoice"></param>
         public void addInvoice(Invoice Invoice)
         {
             InvoicesCollection.Add(Invoice);
+            int TotalInvoiceRevenue;
+            if(Int32.TryParse(Invoice.TotalCost, out TotalInvoiceRevenue))
+            {
+                totalRevenue += TotalInvoiceRevenue;
+            }
+            
         }
     }
 }

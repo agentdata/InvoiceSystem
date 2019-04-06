@@ -1,6 +1,9 @@
-﻿using InvoiceSystem.OtherClasses;
+﻿using InvoiceSystem.Classes;
+using InvoiceSystem.OtherClasses;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +22,42 @@ namespace InvoiceSystem.Main
     /// <summary>
     /// Interaction logic for NewInvoice.xaml
     /// </summary>
-    public partial class NewInvoice : UserControl
+    public partial class NewInvoice : UserControl, INotifyPropertyChanged
     {
+        #region Fields
         private readonly ViewNavigationController viewNavigationController;
-        private string NewOrEdit;
-        public Invoice CurrentInvoice { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion Fields
+
+        #region Properties
+        public ObservableCollection<Item> AvailableItems { get; set; }
+        public LineItems _shoppingCart = new LineItems();
+        public LineItems shoppingCart {
+            get { return _shoppingCart; }
+            set
+            {
+                if (value != _shoppingCart)
+                {
+                    _shoppingCart = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(runningTotal)));
+                }
+            }
+        }
+        private int _runningTotal = 0;
+        public int runningTotal 
+        {
+            get { return _runningTotal; }
+            set
+            {
+                if (value != _runningTotal)
+                {
+                    _runningTotal = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(runningTotal)));
+                }
+            }
+
+        }
+        #endregion Properties
 
         #region Constructors
 
@@ -31,7 +65,7 @@ namespace InvoiceSystem.Main
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
-            NewOrEdit = "new";
+            AvailableItems = clsMainSQL.GetAllItems();
             DataContext = this;
         }
         #endregion Constructors
@@ -39,17 +73,13 @@ namespace InvoiceSystem.Main
         #region UI Actions
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
-            switch (NewOrEdit)
-            {
-                case "edit":
-                    //sql command to edit existing entry
-                    break;
-                case "new":
-                    //sql command to add new entry
-                    break;
-            }
+            //generate new invoice
 
-            //then return to main screen
+            //insert new invoice into DB
+
+            //add line items to DB attached to this new invoice
+
+            //return to main screen
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
 
@@ -58,8 +88,31 @@ namespace InvoiceSystem.Main
             //Return reset the screen screen
             viewNavigationController.ChangeCurrentView(new NewInvoice(viewNavigationController));
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddNewItem_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //if(CurrentInvoice.LineItems.Where())
+            DataGridRow row = sender as DataGridRow;
+            Item selectedItem = (row.Item as Item);
+            if (selectedItem != null)
+            {
+                //ifshoppingcart already contains item with same itemcode, then just add 1
+                if (shoppingCart.containsItem(selectedItem.ItemCode))
+                {
+                    shoppingCart.lineItems.Where(x => x.Item.ItemCode == selectedItem.ItemCode).FirstOrDefault().Quantity++;
+                }
+
+                //otherwise add selectedItem to the running list
+                else
+                    shoppingCart.addLineItem(new LineItem(selectedItem,1));
+                runningTotal += Int32.Parse(selectedItem.Cost);
+            }
+        }
         #endregion UI Actions
-
-
     }
 }

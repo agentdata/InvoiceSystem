@@ -19,59 +19,65 @@
 
         <!--This grid contains the Invoice list in a datagrid, double click action opens to view all details, left column of the window -->
         <Border BorderBrush="Black" BorderThickness="2" Grid.Column="0" Grid.Row="1" Margin="5,0,5,5">
-        <Grid >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False" >
-                <DataGrid.Resources>
-                    <ContextMenu x:Key="RightClick_ContextMenu">
-                        <MenuItem Header="_Edit" Click="InvoiceRowRightClickEdit_Action"/>
-                        <MenuItem Header="_Delete" Click="GridViewRightClickDelete_Action" Icon="/Images/Menu_Icons/delete.png"/>
-                    </ContextMenu>
-                    <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
-                        <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                    </Style>
-                    <Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseDoubleClick" Handler="InvoiceRow_DoubleClick"/>
-                        <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
-                    </Style>
-                </DataGrid.Resources>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False" >
+                    <DataGrid.Resources>
+                        <ContextMenu x:Key="RightClick_ContextMenu">
+                            <MenuItem Header="_Edit" Click="InvoiceRowRightClickEdit_Action"/>
+                            <MenuItem Header="_Delete" Click="GridViewRightClickDelete_Action" Icon="/Images/Menu_Icons/delete.png"/>
+                        </ContextMenu>
+                        <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
+                            <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Style>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="InvoiceRow_DoubleClick"/>
+                            <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
+                        </Style>
+                    </DataGrid.Resources>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="20" Width="*"/>
-                    <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="20" Width="auto"/>
-                    <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="20" Width="*"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Invoice #" Binding="{Binding InvoiceNum}"  IsReadOnly="True" FontSize="15" Width="*"/>
+                        <DataGridTextColumn Header="Date" Binding="{Binding InvoiceDate}" IsReadOnly="True" FontSize="15" Width="auto"/>
+                        <DataGridTextColumn Header="Total Items" Binding="{Binding TotalItems}" IsReadOnly="True" FontSize="15" Width="auto"/>
+                        <DataGridTextColumn Header="Total Cost" Binding="{Binding TotalCost}" IsReadOnly="True" FontSize="15" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Border>
 
         <!-- This Grid contains the sales statistics, right column of the window -->
         <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.Row="1" Margin="5,0,5,5">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label Content="Sales Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="0" Grid.Column="1"/>
-            <DockPanel Grid.Row="2">
-                <Label Content="Number of invoices: " FontSize="15"/>
-                <Label Content="{Binding Invoices.totalInvoices}" FontSize="15"/>
-            </DockPanel>
-            <DockPanel Grid.Row="3">
-                <Label Content="Number of Items: " FontSize="15"/>
-                <Label Content="{Binding totalNumItems}" FontSize="15"/>
-            </DockPanel>
-            <DockPanel Grid.Row="4">
-                <Label Content="Total Items Sold: " FontSize="15"/>
-                <Label Content="{Binding Invoices.totalItems}" FontSize="15"/>
-            </DockPanel>
-        </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Sales Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="0" Grid.Column="1"/>
+                <DockPanel Grid.Row="2">
+                    <Label Content="Number of invoices: " FontSize="15"/>
+                    <Label Content="{Binding Invoices.totalInvoices}" FontSize="15"/>
+                </DockPanel>
+                <DockPanel Grid.Row="3">
+                    <Label Content="Number of Items: " FontSize="15"/>
+                    <Label Content="{Binding totalNumItems}" FontSize="15"/>
+                </DockPanel>
+                <DockPanel Grid.Row="4">
+                    <Label Content="Total Items Sold: " FontSize="15"/>
+                    <Label Content="{Binding Invoices.totalItems}" FontSize="15"/>
+                </DockPanel>
+                <DockPanel Grid.Row="5">
+                    <Label Content="Total Revenue: " FontSize="15"/>
+                    <Label Content="{Binding Invoices.totalRevenue}" FontSize="15"/>
+                </DockPanel>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

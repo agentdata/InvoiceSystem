@@ -17,7 +17,7 @@
         <DockPanel >
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="Settings"/>
+                    <MenuItem Header="Settings" Click="MenuBarSettingsButton_Action"/>
                         <Separator/>
                     <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
                 </MenuItem>

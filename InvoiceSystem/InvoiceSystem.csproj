@@ -72,14 +72,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\clsDataAccess.cs" />
     <Compile Include="Classes\Item.cs" />
-    <Compile Include="Classes\Items.cs" />
     <Compile Include="Classes\LineItem.cs" />
+    <Compile Include="Classes\LineItems.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="InvoiceDBDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Items\wndItems.xaml.cs">
       <DependentUpon>wndItems.xaml</DependentUpon>
     </Compile>
@@ -102,6 +97,9 @@
     <Compile Include="Classes\InvoiceList.cs" />
     <Compile Include="Classes\ObservableUserControl.cs" />
     <Compile Include="Classes\ViewNavigationController.cs" />
+    <Compile Include="OtherViews\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Search\clsSearchLogic.cs" />
     <Compile Include="Search\clsSearchSQL.cs" />
     <Compile Include="Search\InvoiceData.cs" />
@@ -144,6 +142,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OtherViews\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OtherViews\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

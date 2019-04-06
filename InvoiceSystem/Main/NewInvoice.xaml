@@ -20,11 +20,77 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <DataGrid Grid.RowSpan="2" Margin="10,10,0,0"/>
+        <!-- Shopping cart-->
+        <Border BorderBrush="Black" BorderThickness="2" Grid.RowSpan="3" Margin="10,10,0,0">
+            <DockPanel LastChildFill="True"  Name="ShoppingCart_DataGrid" >
+                <TextBlock Text="Selected Items"
+               Background="Blue"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="SemiBold"
+               TextAlignment="Center"
+               DockPanel.Dock="Top" />
+                <DataGrid  ItemsSource="{Binding Path=shoppingCart.lineItems, Mode=TwoWay}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+                        <ContextMenu x:Key="RightClick_ContextMenu">
+                            <MenuItem Header="_Edit" />
+                            <MenuItem Header="_Delete" Icon="/Images/Menu_Icons/delete.png"/>
+                        </ContextMenu>
+                        <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
+                            <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Style>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="AddNewItem_DoubleClick"/>
+                            <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Item Code" Binding="{Binding Item.ItemCode}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding Item.Cost}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" IsReadOnly="False"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
 
-
-
-        <Button Grid.Column="0" Grid.Row="5" Content="Cancel" FontSize="30" Click="SubmitButton_Button" Margin="10,0,10,10"/>
+        <!-- Available Items-->
+        <Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Margin="10,10,10,0">
+            <DockPanel LastChildFill="True"  >
+                <TextBlock Text="Available Items"
+               Background="Blue"
+               Foreground="White"
+               FontSize="20"
+               FontWeight="SemiBold"
+               TextAlignment="Center"
+               DockPanel.Dock="Top" />
+                <DataGrid  Name="AllItems_DataGrid" ItemsSource="{Binding Path=AvailableItems, Mode=TwoWay}" AutoGenerateColumns="False">
+                    <DataGrid.Resources>
+                        <ContextMenu x:Key="RightClick_ContextMenu">
+                            <MenuItem Header="_Edit" />
+                            <MenuItem Header="_Delete" Icon="/Images/Menu_Icons/delete.png"/>
+                        </ContextMenu>
+                        <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
+                            <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Style>
+                        <Style TargetType="DataGridRow">
+                            <EventSetter Event="MouseDoubleClick" Handler="AddNewItem_DoubleClick"/>
+                            <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Item Code" Binding="{Binding ItemCode}" Width="Auto" IsReadOnly="True" />
+                        <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" Width="Auto" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Description" Binding="{Binding ItemDesc}" Width="*" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </Border>
+        <DockPanel Grid.Row="3" Grid.Column="0">
+            <Label Content="Running Total"  DockPanel.Dock="Left" VerticalContentAlignment="Center"/>
+            <Label Content="{Binding runningTotal}"  VerticalContentAlignment="Center"/>
+        </DockPanel>
+        <Button Grid.Column="0" Grid.Row="5" Content="Reset" FontSize="30" Click="SubmitButton_Button" Margin="10,0,10,10"/>
         <Button Grid.Column="2" Grid.Row="5" Content="Submit" FontSize="30" Click="ResetButton_Button" Margin="10,0,10,10"/>
     </Grid>
+
 </UserControl>

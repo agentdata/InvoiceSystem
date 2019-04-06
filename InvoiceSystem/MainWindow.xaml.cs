@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InvoiceSystem.OtherViews;
 
 namespace InvoiceSystem
 {
@@ -63,6 +64,10 @@ namespace InvoiceSystem
         }
 
         #region Menu Buttons
+        private void MenuBarSettingsButton_Action(object sender, RoutedEventArgs e)
+        {
+            viewNavigationController.ChangeCurrentView(new Settings(viewNavigationController));
+        }
 
         private void MenuBarExitButton_Action(object sender, RoutedEventArgs e)
         {
@@ -95,7 +100,6 @@ namespace InvoiceSystem
             window.Show();
         }
 
-        #endregion
-
+        #endregion Menu Buttons
     }
 }

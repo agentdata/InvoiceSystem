@@ -10,12 +10,20 @@ namespace InvoiceSystem.OtherClasses
 {
     public class Invoice
     {
+        #region Properties
         public string InvoiceNum { get; set; }
         public string InvoiceDate { get; set;}
         public string TotalCost { get; set;}
-        public ObservableCollection<LineItem> LineItems { get; set; } = new ObservableCollection<LineItem>();
+        public LineItems LineItems { get; set; } = new LineItems();
         public int TotalItems { get; set; } = 0;
+        #endregion Properties
 
+        /// <summary>
+        /// Constructor that takes an invoice number, invoice date and total cost
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="InvoiceDate"></param>
+        /// <param name="TotalCost"></param>
         public Invoice(string InvoiceNum, string InvoiceDate, string TotalCost)
         {
             this.InvoiceNum = InvoiceNum;
@@ -23,9 +31,15 @@ namespace InvoiceSystem.OtherClasses
             this.TotalCost = TotalCost;
         }
 
+        /// <summary>
+        /// This method is important for adding all new Items to an invoice so the line item is updated and that the totalItems 
+        /// property is also updated.
+        /// </summary>
+        /// <param name="Item"></param>
+        /// <param name="quantity"></param>
         public void addItem(Item Item, int quantity)
         {
-            LineItems.Add(new LineItem ( Item, quantity ));
+            LineItems.addLineItem(new LineItem ( Item, quantity ));
             TotalItems += quantity;
         }
     }
