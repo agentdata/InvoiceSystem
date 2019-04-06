@@ -153,7 +153,7 @@ namespace InvoiceSystem.Search
         /// <param name="e"></param>
         private void InvoiceNumbersBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            logic.getNumber = InvoiceNumbersBox.Items.GetItemAt(InvoiceNumbersBox.SelectedIndex).ToString();
+            logic.getNumber = InvoiceNumbersBox.SelectedValue.ToString();
             startsearch = true;
         }
 
@@ -165,7 +165,7 @@ namespace InvoiceSystem.Search
         /// <param name="e"></param>
         private void TotalCostsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            logic.getCosts = TotalCostsBox.Items.GetItemAt(TotalCostsBox.SelectedIndex).ToString();
+            logic.getCosts = TotalCostsBox.SelectedValue.ToString();
             startsearch = true;
         }
     }
