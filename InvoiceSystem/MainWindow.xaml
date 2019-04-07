@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:InvoiceSystem"
         mc:Ignorable="d" Title="Invoice System"
         Width="800" Height="600" WindowStartupLocation="CenterScreen">
-
+    
+    <!--Resources for the window such as standard Styling-->
+    <Window.Resources>
+        <!--Menu font styling-->
+        <Style x:Key="MenuTextStyle">
+            <Setter Property="TextElement.FontFamily" Value="App_Resources/#Roboto"/>
+            <Setter Property="TextElement.FontSize" Value="20"/>
+        </Style>
+    </Window.Resources>
+    
+    <!-- Main Grid which displays the menu and contentpresenter -->
     <Grid Name="MainViewGrid_Grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,23 +25,23 @@
 
         <!-- Menu bar-->
         <DockPanel Name="Menu_DockPanel" >
-            <Menu DockPanel.Dock="Top"  MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
-                <MenuItem Header="_File">
+            <Menu DockPanel.Dock="Top" Style="{StaticResource MenuTextStyle}">
+                <MenuItem Header="_File"  MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
                     <MenuItem Header="Settings" />
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
                 </MenuItem>
-                <MenuItem Header="_Invoices">
+                <MenuItem Header="_Invoices" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
                     <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action"/>
                     <Separator/>
                     <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
                     <Separator/>
                     <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
                 </MenuItem>
-                <MenuItem Header="_Items">
+                <MenuItem Header="_Items" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
                     <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action"/>
                 </MenuItem>
-                <MenuItem Header="_Help">
+                <MenuItem Header="_Help" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
                     <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/>
                 </MenuItem>
             </Menu>
@@ -39,21 +49,10 @@
 
         <!-- This contentpresenter is what is bound to the mainview and 
         is what each user control modifies to show itself in this window-->
-        <ContentPresenter Name="MainContentPresenter_ContentPresenter" Grid.Row="1" Content="{Binding MainView, Mode=OneWay}" IsEnabledChanged="ChangeDisabledForegroundAndOpacity_Action">
-            <!--Set color and opacity when this contentpresenter isEnabled is set to false--><!--
-            <ContentPresenter.Style>
-                <Style>
-                    <Style.Triggers>
-                        
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                        </Trigger   >
-                    </Style.Triggers>
-                </Style>
-            </ContentPresenter.Style>-->
-
-        </ContentPresenter>
-
+        <ContentPresenter Name="MainContentPresenter_ContentPresenter" Grid.Row="1" Content="{Binding MainView, Mode=OneWay}" IsEnabledChanged="ChangeDisabledForegroundAndOpacity_Action"/>
+        
+        <!-- This Label shows a visible black opaque layer above the contentpresenter when 
+        the mouse enters the menu button area, becomes hidden when mouse exits the menu bar area-->
         <Label Name = "OpaqueContentCover_Label" Visibility="Hidden"  Background = "Black" Grid.Row = "1" Opacity = "0.45"/>
     </Grid>
 </Window>

@@ -174,6 +174,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Black.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Bold.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Italic.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Light.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-LightItalic.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Medium.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Regular.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-Thin.ttf" />
+    <Resource Include="App_Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
     <None Include="InvoiceDBDataSet.xsc">
       <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
     </None>
@@ -207,9 +219,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="Images\Menu_Icons\Home-512.png" />
-    <Resource Include="Images\Menu_Icons\delete.png" />
-    <Resource Include="Images\Menu_Icons\add.png" />
+    <Resource Include="App_Resources\Images\Menu_Icons\Home-512.png" />
+    <Resource Include="App_Resources\Images\Menu_Icons\delete.png" />
+    <Resource Include="App_Resources\Images\Menu_Icons\add.png" />
     <Content Include="InvoiceDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

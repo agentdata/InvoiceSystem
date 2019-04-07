@@ -71,6 +71,12 @@ namespace InvoiceSystem.Main
         #endregion Constructors
 
         #region UI Actions
+        /// <summary>
+        /// This function is called when the button labeled Submit is clicked.
+        /// A new invoice is generated if there is more than 1 lineitem in the shopping cart.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
             //generate new invoice
@@ -90,7 +96,9 @@ namespace InvoiceSystem.Main
         }
 
         /// <summary>
-        /// 
+        /// This function is called when an item in the grid is double clicked, it adds the selected
+        /// item to the shoppingCart. it either adds a new lineitem to the shopping cart or increases 
+        /// the existing line items quantity.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

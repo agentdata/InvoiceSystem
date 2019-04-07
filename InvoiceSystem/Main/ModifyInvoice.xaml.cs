@@ -44,27 +44,30 @@ namespace InvoiceSystem.Main
         #endregion Properties
 
         #region Fields
+        //List that items are added to when they are being added to the list.
         List<LineItem> newLineItems = new List<LineItem>();
         List<LineItem> updateLineItems = new List<LineItem>();
+
         // Navigation controller which is passed around so that the view can be updated.
         private readonly ViewNavigationController viewNavigationController;
-        // This bool is changed when a lineitem quantity is changed.
-        public bool wasModified = false;
-        //event to be raised whena property is modified so the view stays up to date.
+        // Event to be raised whena property is modified so the view stays up to date.
         public event PropertyChangedEventHandler PropertyChanged;
-        bool firstTime = true;
+        
         #endregion Fields
 
         #region Constructors
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="viewNavigationController"></param>
+        /// <param name="invoice"></param>
         public ModifyInvoice(ViewNavigationController viewNavigationController, Invoice invoice)
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
             CurrentInvoice = invoice;
             AvailableItems = clsMainSQL.GetAllItems();
-            firstTime = false;
             DataContext = this;
-            
         }
         #endregion Constructors
 
@@ -77,26 +80,22 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
-            
             foreach (LineItem LineItem in newLineItems)
             {
                 //add new lineitem
-                clsMainSQL.addNewLineItemSQL(CurrentInvoice.InvoiceNum, LineItem, "0", LineItem.Quantity);
+                //Bug with lineitemnum turn this line off for prototype
+                //clsMainSQL.addNewLineItemSQL(CurrentInvoice.InvoiceNum, LineItem, "0", LineItem.Quantity);
             }
 
             foreach (LineItem LineItem in CurrentInvoice.LineItems.lineItems)
             {
-                
                 //update existing line item with new quantity
                 clsMainSQL.UpdateLineItemSQL(CurrentInvoice.InvoiceNum, LineItem.Item.ItemCode, LineItem.Quantity);
             }
 
             //add new line item
             //update the invoice total cost.
-            if (newLineItems.Count > 0 || updateLineItems.Count > 0)
-            {
-                clsMainLogic.updateInvoiceTotalCost(CurrentInvoice);
-            }
+            clsMainLogic.updateInvoiceTotalCost(CurrentInvoice);
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
         }
 
@@ -112,7 +111,8 @@ namespace InvoiceSystem.Main
         }
 
         /// <summary>
-        /// 
+        /// This method is called when an item in the available items datagrid is double clicked.
+        /// It adds a new line item to the invoice, or adds 1 if the item already exists in the current invoice.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

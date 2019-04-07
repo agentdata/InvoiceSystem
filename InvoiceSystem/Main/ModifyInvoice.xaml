@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvoiceSystem.Main"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -57,7 +57,6 @@
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="RowItem_DoubleClick"/>
                         <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
-                        
                     </Style>
                 </DataGrid.Resources>
                 
@@ -65,6 +64,7 @@
                     <DataGridTextColumn Header="Item Code" Binding="{Binding Item.ItemCode}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Item Price" Binding="{Binding Item.Cost}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, ValidatesOnExceptions=True}" IsReadOnly="False" Width="*"/>
+                    <DataGridTemplateColumn Header="Actions"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
@@ -81,16 +81,11 @@
 
             <DataGrid Name="AllItems_DataGrid" ItemsSource="{Binding Path=AvailableItems, Mode=TwoWay}" AutoGenerateColumns="False">
                 <DataGrid.Resources>
-                    <ContextMenu x:Key="RightClick_ContextMenu">
-                        <MenuItem Header="_Edit" />
-                        <MenuItem Header="_Delete" Icon="/Images/Menu_Icons/delete.png"/>
-                    </ContextMenu>
                     <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
                         <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
                     </Style>
                     <Style TargetType="DataGridRow">
                         <EventSetter Event="MouseDoubleClick" Handler="AddNewItem_DoubleClick"/>
-                        <Setter Property="ContextMenu" Value="{StaticResource RightClick_ContextMenu}" />
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>

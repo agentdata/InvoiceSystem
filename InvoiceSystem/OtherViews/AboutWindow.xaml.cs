@@ -35,21 +35,19 @@ namespace InvoiceSystem.OtherClasses
             this.ContentPresenter = opaqueContentCover_Label;
             this.Menu_DockPanel = menu_DockPanel;
             DataContext = this;
-            Closed += MainGameChoiceWindow_Closed;
-
+            Closed += AboutWindow_Closed;
         }
         /// <summary>
-        /// This is triggered by the Closed event, if a game button to exit the window and go back has not been pressed then
-        /// the button must have been the top red x, when a game button is pressed it sets shutdown or quit to quit so the 
-        /// shutdown process in this method doesn't occur.
+        /// This is triggered by the Window's Closed event.
+        /// The purpose is to re-enable the contentpresenter and menu for the MainWindow
+        /// which were both disabled when this window was opened.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainGameChoiceWindow_Closed(object sender, EventArgs e)
+        private void AboutWindow_Closed(object sender, EventArgs e)
         {
             ContentPresenter.IsEnabled = true;
             Menu_DockPanel.IsEnabled = true;
         }
-
     }
 }

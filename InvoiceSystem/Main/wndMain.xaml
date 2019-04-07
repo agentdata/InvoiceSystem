@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InvoiceSystem.Main"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400" >
+             d:DesignHeight="600" d:DesignWidth="800" >
     <Grid>
         <!--Grid Definitions-->
         <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
         <Label Content="Invoice System Dashboard" Grid.Row="0" FontSize="30" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
         <!--This grid contains the Invoice list in a datagrid, double click action opens to view all details, left column of the window -->
         <Border BorderBrush="Black" BorderThickness="2" Grid.Column="0" Grid.Row="2" Margin="5,0,5,5">
-            <Grid >
+            <Grid > 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="auto"/>
@@ -63,20 +63,20 @@
                 </Grid.RowDefinitions>
                 <Label Content="Sales Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25" Grid.Row="0" Grid.Column="1"/>
                 <DockPanel Grid.Row="2">
-                    <Label Content="Number of invoices: " FontSize="15"/>
-                    <Label Content="{Binding Invoices.totalInvoices}" FontSize="15"/>
+                    <Label Content="Number of invoices: " FontSize="20"/>
+                    <Label Content="{Binding Invoices.totalInvoices}" FontSize="20"/>
                 </DockPanel>
                 <DockPanel Grid.Row="3">
-                    <Label Content="Number of Items: " FontSize="15"/>
-                    <Label Content="{Binding totalNumItems}" FontSize="15"/>
+                    <Label Content="Available Items in DB: " FontSize="20"/>
+                    <Label Content="{Binding totalNumItems}" FontSize="20"/>
                 </DockPanel>
                 <DockPanel Grid.Row="4">
-                    <Label Content="Total Items Sold: " FontSize="15"/>
-                    <Label Content="{Binding Invoices.totalItems}" FontSize="15"/>
+                    <Label Content="Total Items Sold: " FontSize="20"/>
+                    <Label Content="{Binding Invoices.totalItems}" FontSize="20"/>
                 </DockPanel>
                 <DockPanel Grid.Row="5">
-                    <Label Content="Total Revenue: " FontSize="15"/>
-                    <Label Content="{Binding Invoices.totalRevenue}" FontSize="15"/>
+                    <Label Content="Total Revenue: " FontSize="20"/>
+                    <Label Content="{Binding Invoices.totalRevenue}" FontSize="20"/>
                 </DockPanel>
             </Grid>
         </Border>
