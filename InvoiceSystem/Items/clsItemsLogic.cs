@@ -14,20 +14,35 @@ namespace InvoiceSystem.Items
         {
             SQL = new clsItemsSQL();
         }
+
+        //Dataset for grid
+
+
+        //get all items
+        public void GetItems()
+        {
+            SQL.GetAllItems();
+        }
+        
+        //add item
+        public void AddItem(string itemcode, string itemdesc, string cost)
+        {
+            SQL.AddNewItem(itemcode, itemdesc, cost);
+        }
+
+
+        //save item
+        public void UpdateItem(string itemcode, string itemdesc, string cost)
+        {
+            SQL.UpdateItem(itemcode, itemdesc, cost);
+        }
+
+        //delete item
+        public void DeleteItem(string itemcode, string itemdesc, string cost)
+        {
+            SQL.DeleteItem(itemcode, itemdesc, cost);
+        }
     }
 
-    //Dataset for grid
-
-
-    //get all items
-    SQL.GetAllItems();
-
-    //add item
-    SQL.AddNewItem();
-
-    //save item
-    SQL.UpdateItem();
-
-    //delete item
-    SQL.DeleteItem();
+    
 }
