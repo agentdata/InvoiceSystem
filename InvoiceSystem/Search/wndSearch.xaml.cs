@@ -23,7 +23,7 @@ namespace InvoiceSystem.Search
     public partial class wndSearch : UserControl
     {
         //attributes
-        clsSearchSQL Sql;
+        
         clsSearchLogic logic;
         bool startsearch;
 
@@ -34,9 +34,12 @@ namespace InvoiceSystem.Search
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
-            Sql = new clsSearchSQL();
+        
             logic = new clsSearchLogic();
             startsearch = false;
+
+            logic.getInvoiceNums();
+            logic.getTotalCosts();
         }
 
         private void ReturnToMainButton_Action(object sender, RoutedEventArgs e)
@@ -48,9 +51,9 @@ namespace InvoiceSystem.Search
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
 
-            InvoiceNumbersBox.ItemsSource = Sql.getInvoiceNums();
-            TotalCostsBox.ItemsSource = Sql.getTotalCosts();
-            InvoiceDataGrid.ItemsSource = Sql.GetInvoices();
+            InvoiceNumbersBox.ItemsSource = logic.InvoiceNumbers;
+            TotalCostsBox.ItemsSource = logic.InvoiceTotalCosts;
+            InvoiceDataGrid.ItemsSource = logic.GetInvoices();
         }
 
         private void SelectInvoiceButton_Click(object sender, RoutedEventArgs e)
@@ -68,17 +71,18 @@ namespace InvoiceSystem.Search
             //resets for a new search 
             logic.resetSearch();  
             //set the datagrid back to how it was when the window first opens
-            InvoiceDataGrid.ItemsSource = Sql.GetInvoices();
+            InvoiceDataGrid.ItemsSource = logic.GetInvoices();
         }
 
         private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
             if (startsearch == true)
             {
+
                 //search invoice number, invoice date and the total costs
                 if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true && logic.SearchTotalCosts() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchAll(logic.getNumber, logic.getDate, logic.getCosts);
+                    InvoiceDataGrid.ItemsSource = logic.SearchAll();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
@@ -87,55 +91,55 @@ namespace InvoiceSystem.Search
                 //search invoice numbers and invoice date
                 else if (logic.SearchInvoiceNum() == true && logic.SearchDate() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchNumber_Date(logic.getNumber, logic.getDate);
+                    InvoiceDataGrid.ItemsSource = logic.SearchNumber_Date();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
                 }
-
 
                 //search invoice number and total costs
                 else if (logic.SearchInvoiceNum() == true && logic.SearchTotalCosts() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchNumber_Cost(logic.getNumber, logic.getCosts);
+                    InvoiceDataGrid.ItemsSource = logic.SearchNumber_Cost();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
 
                 }
+
 
                 //search date and total costs
                 else if (logic.SearchTotalCosts() == true && logic.SearchDate() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchDate_Cost(logic.getDate, logic.getCosts);
+                    InvoiceDataGrid.ItemsSource = logic.SearchDate_Cost();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
                 }
 
+                //lets start here
                 //invoice number searches
                 else if (logic.SearchInvoiceNum() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceNumbers(logic.getNumber);
+
+                    InvoiceDataGrid.ItemsSource = logic.SearchInvoiceNumbers();
                     //reset the search for new search 
                     logic.resetSearch();
                     startsearch = false;
                 }
-
                 //search the date 
                 else if (logic.SearchDate() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchInvoiceDates(logic.getDate);
+                    InvoiceDataGrid.ItemsSource = logic.SearchInvoiceDates();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
                 }
 
-
                 //search the total costs 
                 else if (logic.SearchTotalCosts() == true)
                 {
-                    InvoiceDataGrid.ItemsSource = Sql.SearchTotalCosts(logic.getCosts);
+                    InvoiceDataGrid.ItemsSource = logic.SearchTotalCost();
                     //reset the search
                     logic.resetSearch();
                     startsearch = false;
@@ -160,7 +164,17 @@ namespace InvoiceSystem.Search
         /// <param name="e"></param>
         private void InvoiceNumbersBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            logic.getNumber = InvoiceNumbersBox.SelectedValue.ToString();
+            InvoiceInfo info;
+
+            for (int i = 0; i < InvoiceNumbersBox.Items.Count; i++)
+            {
+                info = (InvoiceInfo)InvoiceNumbersBox.Items[i];
+                if (InvoiceNumbersBox.SelectedValue.ToString() == info.InvoiceNumber)
+                {
+                    logic.getNumber = info.InvoiceNumber;
+                }
+            }
+
             startsearch = true;
         }
 
@@ -172,7 +186,17 @@ namespace InvoiceSystem.Search
         /// <param name="e"></param>
         private void TotalCostsBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            logic.getCosts = TotalCostsBox.SelectedValue.ToString();
+            InvoiceInfo info;
+
+            for (int i = 0; i < InvoiceNumbersBox.Items.Count; i++)
+            {
+                info = (InvoiceInfo)TotalCostsBox.Items[i];
+                if (TotalCostsBox.SelectedValue.ToString() == info.TotalCosts)
+                {
+                    logic.getCosts = info.TotalCosts;
+                }
+            }
+
             startsearch = true;
         }
 
