@@ -33,7 +33,7 @@ namespace InvoiceSystem.Main
         //List of all invoices pulled when this view is initialized, used to populate the datagrid in the view.
         public InvoiceList Invoices { get; set; } = new InvoiceList();
         //This number is queried when the view is initialized, it is to show the total number of items in the database for the stats column.
-        public int totalNumItems { get { return clsMainSQL.totalItems(); } }
+        public int totalNumItems { get { return clsMainLogic.totalNumItems(); } }
         #endregion Properties
 
         #region Constructors
@@ -57,7 +57,7 @@ namespace InvoiceSystem.Main
         /// </summary>
         private void IntitialWindowLoad()
         {
-            Invoices = clsMainSQL.getAllInvoices(Invoices);
+            Invoices = clsMainLogic.getAllInvoices(Invoices);
         }
         #endregion
 

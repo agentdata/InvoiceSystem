@@ -16,103 +16,39 @@ namespace InvoiceSystem.Main
 {
     public static class clsMainSQL
     {
-        /// <summary>
-        /// This function is used to get all the invoices in the database.
-        /// returns an InvoiceList which is built up by getting invoices, items then linking new LinItem objects to each invoice object.
-        /// </summary>
-        /// <param name="Invoices"></param>
-        /// <returns></returns>
-        public static InvoiceList getAllInvoices(InvoiceList Invoices)
-        {   
-            clsDataAccess dataAccess = new clsDataAccess();
-            int Invoices_Rows = 0;
-            int Item_Rows = 0;
-            int LineItem_Rows = 0;
-
-            //Create a new DataSet for Invoices
-            DataSet InvoicesDS = new DataSet();
-            //Create a new DataSet for Items
-            DataSet ItemsDS= new DataSet();
-            //Create a new DataSet for Items
-            DataSet ItemLinkDS = new DataSet();
-
-            ObservableCollection<Item> tempItemCollection = new ObservableCollection<Item>();
-
-            #region Get Invoices
-            //get Invoices dataset
-
-            InvoicesDS = dataAccess.ExecuteSQLStatement("Select * from Invoices", ref Invoices_Rows);
-
-            // do stuff with datasets
-
-            //add Invoices into invoices list
-            for (int i = 0; i < Invoices_Rows; i++)
-            {
-                Invoice nextinvoice = new Invoice(
-                                                InvoicesDS.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                                                InvoicesDS.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                                                InvoicesDS.Tables[0].Rows[i]["TotalCost"].ToString());
-                Invoices.addInvoice(nextinvoice);
-            }
-            #endregion Get Invoices
-
-            #region Get Items
-
-            //get Item Descriptions dataset
-            ItemsDS = dataAccess.ExecuteSQLStatement("Select * from ItemDesc", ref Item_Rows);
-
-            // do stuff with datasets
-            //add items to temporary collection
-            for (int i = 0; i < Item_Rows; i++)
-            {
-                Item Item = new Item(
-                                                ItemsDS.Tables[0].Rows[i]["ItemCode"].ToString(),
-                                                ItemsDS.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                                                ItemsDS.Tables[0].Rows[i]["Cost"].ToString());
-                tempItemCollection.Add(Item);
-            }
-            #endregion Get Items
-
-            #region Link Items To Invoices
-            //get LineItems dataset
-
-            ItemLinkDS = dataAccess.ExecuteSQLStatement("Select * from LineItems", ref LineItem_Rows);
-
-            // do stuff with datasets
-            // Load invoices with correct number of items for the order
-            for (int i = 0; i < LineItem_Rows; i++)
-            {
-                var invoiceNum = ItemLinkDS.Tables[0].Rows[i]["InvoiceNum"].ToString();
-                var ItemCode = ItemLinkDS.Tables[0].Rows[i]["ItemCode"].ToString();
-                var LineItemNumber = ItemLinkDS.Tables[0].Rows[i]["LineItemNum"].ToString();
-                var Quantity = ItemLinkDS.Tables[0].Rows[i]["Quantity"].ToString();
-
-                //get item
-                Item itemToAdd = tempItemCollection.Where(x => x.ItemCode == ItemCode).FirstOrDefault();
-                
-                //find the invoice from invoices and add the item to it
-                Invoices.InvoicesCollection.Where(x => x.InvoiceNum == invoiceNum).FirstOrDefault().addItem(itemToAdd, Int32.Parse(Quantity));
-            }
-            #endregion Link Items To Invoices
-
-            return Invoices;
+        #region Query
+        public static DataSet getAllInvoices(ref int Invoices_Rows)
+        {
+            return (new clsDataAccess()).ExecuteSQLStatement("Select * from Invoices", ref Invoices_Rows);
+        }
+        public static DataSet getLineItems(ref int LineItem_Rows)
+        {
+            return (new clsDataAccess()).ExecuteSQLStatement("Select * from LineItems", ref LineItem_Rows);
+        }
+        public static DataSet getItems(ref int Item_Rows)
+        {
+            return (new clsDataAccess()).ExecuteSQLStatement("Select * from ItemDesc", ref Item_Rows);
         }
 
         /// <summary>
-        /// Query to get the total items in the database
+        /// Query to get the total items in the database, this
         /// </summary>
         /// <returns> an int representing the number of total items in the database</returns>
-        internal static int totalItems()
+        internal static void totalNumItems(ref int ItemDescRows)
         {
-            int ItemDescRows = 0;
-
-            //Create a new DataSet for all Items
-            DataSet itemDescRowsDS = new DataSet();
-            //Set DS as the return value from 
-            itemDescRowsDS =  new clsDataAccess().ExecuteSQLStatement("Select * from ItemDesc", ref ItemDescRows);
-            return ItemDescRows;
+            (new clsDataAccess()).ExecuteSQLStatement("Select * from ItemDesc", ref ItemDescRows);
         }
 
+
+        public static DataSet GetAllItems(ref int Item_Rows)
+        {
+            // Get Item Descriptions dataset
+            return (new clsDataAccess()).ExecuteSQLStatement("Select * from ItemDesc", ref Item_Rows);
+        }
+        #endregion Query
+
+        #region NON QUERY
+        #region Update Commands
         /// <summary>
         /// This function updates
         /// </summary>
@@ -121,52 +57,28 @@ namespace InvoiceSystem.Main
         /// <param name="quantity"></param>
         public static void UpdateLineItemSQL(string InvoiceNum, string ItemCode, int quantity)
         {
-            string sqlCommand;
-            if (quantity == 0)
-            {
-                //delete line item
-                sqlCommand = "DELETE FROM LineItems WHERE InvoiceNum=" + InvoiceNum + " AND ItemCode='" + ItemCode+"'";
-            }
-            else
-            {
-                //update quantity
-                sqlCommand = "UPDATE LineItems SET Quantity=" + quantity + " WHERE InvoiceNum=" + InvoiceNum + " AND ItemCode='" + ItemCode + "'";
-            }
-            new clsDataAccess().ExecuteNonQuery(sqlCommand);
+            (new clsDataAccess()).ExecuteNonQuery("UPDATE LineItems SET Quantity=" + quantity + " WHERE InvoiceNum=" + InvoiceNum + " AND ItemCode='" + ItemCode + "'");
         }
 
-        public static ObservableCollection<Item> GetAllItems()
+        /// <summary>
+        /// This function updates the value for total cost on the specified invoice number in the program database
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="TotalCost"></param>
+        public static void updateInvoiceTotalCost(string InvoiceNum, string TotalCost)
         {
-            //Data
-            clsDataAccess dataAccess = new clsDataAccess();
-
-            // Create a new DataSet for Items
-            DataSet ItemsDS = new DataSet();
-
-            //Int for total rows
-            int Item_Rows = 0;
-
-            // Collection to load item objects into
-            ObservableCollection<Item> ItemCollection = new ObservableCollection<Item>();
-
-            #region Get Items
-
-            // Get Item Descriptions dataset
-            ItemsDS = dataAccess.ExecuteSQLStatement("Select * from ItemDesc", ref Item_Rows);
-
-            // Do stuff with datasets
-            // Add items to temporary collection
-            for (int i = 0; i < Item_Rows; i++)
-            {
-                Item Item = new Item(
-                                                ItemsDS.Tables[0].Rows[i]["ItemCode"].ToString(),
-                                                ItemsDS.Tables[0].Rows[i]["ItemDesc"].ToString(),
-                                                ItemsDS.Tables[0].Rows[i]["Cost"].ToString());
-                ItemCollection.Add(Item);
-            }
-            #endregion Get Items
-
-            return ItemCollection;
+            new clsDataAccess().ExecuteNonQuery("UPDATE Invoices SET TotalCost =" + TotalCost + " WHERE InvoiceNum=" + InvoiceNum);
+        }
+        #endregion Update Commands
+        #region Delete Commands
+        /// <summary>
+        /// This should be executed when the update amount is zero so that it removes it from the lineitems 
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="ItemCode"></param>
+        public static void DeleteLineItem(ref string InvoiceNum, ref string ItemCode)
+        {
+            (new clsDataAccess()).ExecuteNonQuery("DELETE FROM LineItems WHERE InvoiceNum=" + InvoiceNum + " AND ItemCode='" + ItemCode + "'");
         }
 
         /// <summary>
@@ -182,18 +94,14 @@ namespace InvoiceSystem.Main
             //delete Invoice
             new clsDataAccess().ExecuteNonQuery("DELETE FROM Invoices WHERE InvoiceNum=" + InvoiceToDelete.InvoiceNum);
         }
-
-        /// <summary>
-        /// This function updates the value for total cost on the specified invoice number in the program database
-        /// </summary>
-        /// <param name="InvoiceNum"></param>
-        /// <param name="TotalCost"></param>
-        public static void updateInvoiceTotalCost(string InvoiceNum, string TotalCost)
-        {
-            new clsDataAccess().ExecuteNonQuery("UPDATE Invoices SET TotalCost ="+TotalCost+" WHERE InvoiceNum=" + InvoiceNum);
-        }
+        #endregion Delete Commands
 
         #region Insert Commands
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="invoiceNum"></param>
+        /// <param name="totalCost"></param>
         public static void InsertInvoice(string invoiceNum, int totalCost)
         {
             //delete line item
@@ -221,5 +129,6 @@ namespace InvoiceSystem.Main
             new clsDataAccess().ExecuteNonQuery(sqlCommand);
         }
         #endregion Insert Commands
+        #endregion NON QUERY
     }
 }

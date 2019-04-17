@@ -12,7 +12,7 @@
         <!--Menu font styling-->
         <Style x:Key="MenuTextStyle">
             <Setter Property="TextElement.FontFamily" Value="App_Resources/#Roboto"/>
-            <Setter Property="TextElement.FontSize" Value="20"/>
+            <Setter Property="TextElement.FontSize" Value="25"/>
         </Style>
     </Window.Resources>
     

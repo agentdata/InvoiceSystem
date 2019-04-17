@@ -39,7 +39,6 @@ namespace InvoiceSystem.Main
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
                 }
             }
-
         }
         #endregion Properties
 
@@ -66,7 +65,7 @@ namespace InvoiceSystem.Main
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
             CurrentInvoice = invoice;
-            AvailableItems = clsMainSQL.GetAllItems();
+            AvailableItems = clsMainLogic.GetAllItems();
             DataContext = this;
         }
         #endregion Constructors

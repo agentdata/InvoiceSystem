@@ -65,7 +65,7 @@ namespace InvoiceSystem.Main
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
-            AvailableItems = clsMainSQL.GetAllItems();
+            AvailableItems = clsMainLogic.GetAllItems();
             DataContext = this;
         }
         #endregion Constructors
