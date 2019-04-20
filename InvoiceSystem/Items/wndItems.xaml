@@ -17,15 +17,15 @@
         <Button x:Name="ExitButton" Content="Exit" FontSize="30" Margin="156,471,498,68" Click="ExitButton_Click"/>
         <Button x:Name="CancelButton" Content="Cancel" FontSize="30" Margin="627,471,26,68" Click="CancelButton_Click"/>
         <Button x:Name="SubmitButton" Content="Submit" FontSize="30" Margin="425,471,209,68" Click="SubmitButton_Click"/>
-        <DataGrid HorizontalAlignment="Left" Margin="31,103,0,0" VerticalAlignment="Top" Height="345" Width="349"/>
+        <DataGrid x:Name="ItemDataGrid" HorizontalAlignment="Left" Margin="28,103,0,0" VerticalAlignment="Top" Height="345" Width="352" SelectionChanged="ItemSelection" CanUserReorderColumns="False" CanUserResizeRows="False" FontSize="17" IsReadOnly="True"/>
         <Label x:Name="CodeLabel" Content="Code" HorizontalAlignment="Left" Margin="436,80,0,0" VerticalAlignment="Top" Width="139" Height="42" FontSize="19" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="CodeText" HorizontalAlignment="Left" Height="51" Margin="412,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="CodeText" HorizontalAlignment="Left" Height="51" Margin="412,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center" PreviewKeyDown="KeyValidation" IsEnabled="False" MaxLength="4"/>
         <Button x:Name="DeleteButton" Content="Delete" FontSize="30" Margin="647,299,10,240" Click="DeleteButton_Click"/>
         <Button x:Name="EditButton" Content="Edit" FontSize="30" Margin="647,211,10,334" Click="EditButton_Click"/>
         <Button x:Name="AddButton" Content="Add" FontSize="30" Margin="647,125,10,418" Click="AddButton_Click"/>
         <Label x:Name="CostLabel" Content="Cost" HorizontalAlignment="Left" Margin="436,200,0,0" VerticalAlignment="Top" Width="139" Height="42" FontSize="19" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="CodeTest" HorizontalAlignment="Left" Height="51" Margin="412,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center"/>
-        <Label x:Name="DescLabel" Content="Description" HorizontalAlignment="Left" Margin="436,318,0,0" VerticalAlignment="Top" Width="139" Height="42" FontSize="19" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="DescText" HorizontalAlignment="Left" Height="51" Margin="412,363,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="CostText" HorizontalAlignment="Left" Height="51" Margin="412,245,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center" MaxLength="10" PreviewKeyDown="NumberValidation"/>
+        <Label x:Name="DescLabel" Content="Description" HorizontalAlignment="Left" Margin="436,324,0,0" VerticalAlignment="Top" Width="139" Height="42" FontSize="19" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="DescText" HorizontalAlignment="Left" Height="79" Margin="412,369,-12,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="356" FontSize="24" VerticalContentAlignment="Center" MaxLength="50" PreviewKeyDown="KeyValidation"/>
     </Grid>
 </UserControl>

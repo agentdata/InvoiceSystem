@@ -1,6 +1,10 @@
-﻿using System;
+﻿using InvoiceSystem.Classes;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,40 +12,122 @@ namespace InvoiceSystem.Items
 {
     class clsItemsLogic
     {
-        clsItemsSQL SQL;
+        #region Variables
+        /// <summary>
+        /// Instance of the SQL Query class for Items.
+        /// </summary>
+        public static clsItemsSQL SQL;
+        /// <summary>
+        /// Stores a list of Items returns from the database.
+        /// </summary>
+        public static BindingList<Item> ItemsList { get; set; }
+        /// <summary>
+        /// Stores an Item object.
+        /// </summary>
+        public static Item item { get; set; }
 
+        #endregion
+
+        #region Methods
+        /// <summary>
+        /// Business Logic Constructor.  Instantiates the SQL Query class.
+        /// </summary>
         public clsItemsLogic ()
         {
             SQL = new clsItemsSQL();
+            
         }
-
-        //Dataset for grid
-
-
-        //get all items
-        public void GetItems()
+                
+        /// <summary>
+        /// Call the SQL query to get all items from the database and creates
+        /// a bindingList of Items.
+        /// </summary>
+        public static void GetItems()
         {
-            SQL.GetAllItems();
+            try
+            {
+                ItemsList = new BindingList<Item>(SQL.GetAllItems());
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+
+
         }
         
-        //add item
-        public void AddItem(string itemcode, string itemdesc, string cost)
+        /// <summary>
+        /// Call the SQL Add Item to add an item to the ItemDesc table.  Also adds an 
+        /// Item to ItemsList.
+        /// </summary>
+        /// <param name="itemcode"></param>
+        /// <param name="itemdesc"></param>
+        /// <param name="cost"></param>
+        public static void AddItem(string itemcode, string itemdesc, string cost)
         {
-            SQL.AddNewItem(itemcode, itemdesc, cost);
+            try
+            {
+                SQL.AddNewItem(itemcode, itemdesc, cost);
+                ItemsList.Add(new Item(itemcode, itemdesc, cost));
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
-        //save item
-        public void UpdateItem(string itemcode, string itemdesc, string cost)
+        /// <summary>
+        /// Calls the SQL Update Item to update a matching Item in the database.  Also updates 
+        /// an item at the given index in ItemsList.
+        /// </summary>
+        /// <param name="itemcode"></param>
+        /// <param name="itemdesc"></param>
+        /// <param name="cost"></param>
+        /// <param name="index"></param>
+        public static void UpdateItem(string itemcode, string itemdesc, string cost, int index)
         {
-            SQL.UpdateItem(itemcode, itemdesc, cost);
+            try
+            {
+                SQL.UpdateItem(itemcode, itemdesc, cost);
+                item = new Item(itemcode, itemdesc, cost);
+
+                ItemsList[index] = item;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
-        //delete item
-        public void DeleteItem(string itemcode, string itemdesc, string cost)
+        /// <summary>
+        /// Call the SQL Delete Item to remove a corresponding record from the database and removes
+        /// the item at the given index in ItemsList.
+        /// </summary>
+        /// <param name="itemcode"></param>
+        /// <param name="itemdesc"></param>
+        /// <param name="cost"></param>
+        /// <param name="index"></param>
+        public static void DeleteItem(string itemcode, string itemdesc, string cost, int index)
         {
-            SQL.DeleteItem(itemcode, itemdesc, cost);
+            try
+            {
+                SQL.DeleteItem(itemcode, itemdesc, cost);
+
+                ItemsList.RemoveAt(index);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
+        #endregion
+
     }
 
     
