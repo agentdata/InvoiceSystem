@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Reflection;
+using System.Windows;
 
 namespace InvoiceSystem.Search
 {
     class clsSearchLogic
     {
+        #region Attributes
         /// <summary>
         /// objuect for the class clsSearchSQL
         /// </summary>
@@ -30,7 +32,7 @@ namespace InvoiceSystem.Search
         /// <summary>
         /// clsDataAccess object
         /// </summary>
-        clsDataAccess db = new clsDataAccess();
+        clsDataAccess db;
         /// <summary>
         /// stores a copy of the invoice Number
         /// </summary>
@@ -43,11 +45,40 @@ namespace InvoiceSystem.Search
         /// stores a copy of the Total Cost
         /// </summary>
         private string TotalCost;
+        /// <summary>
+        /// this stores the invoice number from selected row in the datagrid
+        /// </summary>
+        private string selectedNumber;
+        /// <summary>
+        /// this stores the invoice Date from the selected row in the datagrid 
+        /// </summary>
+        private string selectedDate;
+        /// <summary>
+        /// this stores the total cost from the selected row in the datagrid 
+        /// </summary>
+        private string selectedCost;
+
+
         public clsSearchLogic()
         {
-            searchSQL = new clsSearchSQL();
+            try
+            {
+                searchSQL = new clsSearchSQL();
+                db = new clsDataAccess();
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
+        #endregion
+
         #region Properties
+        /// <summary>
+        /// this property gets the invoice number 
+        /// </summary>
         public string getNumber
         {
             get
@@ -60,6 +91,9 @@ namespace InvoiceSystem.Search
             }
         }
 
+        /// <summary>
+        /// this property sets the invoice date
+        /// </summary>
         public string getDate
         {
             get
@@ -72,6 +106,9 @@ namespace InvoiceSystem.Search
             }
         }
 
+        /// <summary>
+        /// this property sets the invoice total costs
+        /// </summary>
         public string getCosts
         {
             get
@@ -83,6 +120,9 @@ namespace InvoiceSystem.Search
                 TotalCost = value;
             }
         }
+        /// <summary>
+        /// this property allows the InvoiceNumbers Oberservable collection be be used throughout the program 
+        /// </summary>
         public ObservableCollection<InvoiceInfo> InvoiceNumbers
         {
             get
@@ -91,11 +131,59 @@ namespace InvoiceSystem.Search
             }
         }
 
+        /// <summary>
+        /// this property allows the InvoiceTotalCosts Oberservable collection to be used throughout the program
+        /// </summary>
         public ObservableCollection<InvoiceInfo> InvoiceTotalCosts
         {
             get
             {
                 return invoiceCosts;
+            }
+        }
+
+        /// <summary>
+        /// this property sets the selectedNumber 
+        /// </summary>
+        public string SelectedInvoiceNum
+        {
+            get
+            {
+                return selectedNumber; 
+            }
+            set
+            {
+                selectedNumber = value;
+            }
+        }
+
+        /// <summary>
+        /// this property sets the selectedDate
+        /// </summary>
+        public string SelectedInvoiceDate
+        {
+            get
+            {
+                return selectedDate;
+            }
+            set
+            {
+                selectedDate = value;
+            }  
+        }
+
+        /// <summary>
+        /// this property sets the selectedCost
+        /// </summary>
+        public string SelectedTotalCost
+        {
+            get
+            {
+                return selectedCost;
+            }
+            set
+            {
+                selectedCost = value;
             }
         }
 
@@ -108,13 +196,22 @@ namespace InvoiceSystem.Search
         /// </summary>
         public bool SearchInvoiceNum()
         {
-            if (InvoiceNumber != null)
+            try
             {
-                return true;
+                if (InvoiceNumber != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -125,13 +222,22 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public bool SearchTotalCosts()
         {
-            if (TotalCost != null)
+            try
             {
-                return true;
+                if (TotalCost != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -141,13 +247,22 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public bool SearchDate()
         {
-            if (InvoiceDate != null)//temp for the default date
+            try
             {
-                return true;
+                if (InvoiceDate != null)//temp for the default date
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
 
@@ -156,9 +271,19 @@ namespace InvoiceSystem.Search
         /// </summary>
         public void resetSearch()
         {
-            InvoiceNumber = null;
-            InvoiceDate = null;//set to a default date // temp for now 
-            TotalCost = null;
+            try
+            {
+                InvoiceNumber = null;
+                InvoiceDate = null;//set to a default date // temp for now 
+                TotalCost = null;
+                
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -167,22 +292,30 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public void getInvoiceNums()
         {
-            invoiceNums = new ObservableCollection<InvoiceInfo>();
-            DataSet ds;
-
-            int res = 0;
-
-
-            ds = db.ExecuteSQLStatement(searchSQL.getInvoiceNums(), ref res);
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                invoiceNums.Add(new InvoiceInfo
-                {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString()
-                });
-            }
+                invoiceNums = new ObservableCollection<InvoiceInfo>();
+                DataSet ds;
 
+                int res = 0;
+
+
+                ds = db.ExecuteSQLStatement(searchSQL.getInvoiceNums(), ref res);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    invoiceNums.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -191,21 +324,28 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public void getTotalCosts()
         {
-
-            DataSet ds;
-
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.getTotalCosts(), ref res);
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                invoiceCosts.Add(new InvoiceInfo
-                {
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                });
-            }
+                DataSet ds;
 
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.getTotalCosts(), ref res);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    invoiceCosts.Add(new InvoiceInfo
+                    {
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -214,24 +354,33 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> GetInvoices()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-
-            ds = db.ExecuteSQLStatement(searchSQL.getInvoices(), ref res);
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+
+
+                ds = db.ExecuteSQLStatement(searchSQL.getInvoices(), ref res);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                });
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    });
+                }
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -240,24 +389,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchInvoiceNumbers()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNums(InvoiceNumber), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
-                {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                }
-                    );
-            }
-            return Invoices;
+                Invoices = new ObservableCollection<InvoiceInfo>();
 
+                DataSet ds;
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNums(InvoiceNumber), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
+                }
+                return Invoices;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -266,23 +423,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchInvoiceDates()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceDates(InvoiceDate), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceDates(InvoiceDate), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
                 }
-                    );
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -292,24 +458,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchTotalCost()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.SearchtotalCosts(TotalCost), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
-                {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
-                }
-                    );
-            }
-            return Invoices;
+                Invoices = new ObservableCollection<InvoiceInfo>();
 
+                DataSet ds;
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.SearchtotalCosts(TotalCost), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
+                }
+                return Invoices;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -320,23 +494,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchNumber_Date()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNum_Date(InvoiceNumber, InvoiceDate), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNum_Date(InvoiceNumber, InvoiceDate), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
                 }
-                    );
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -345,23 +528,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchNumber_Cost()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-            //    string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND TotalCost = " + cost;
-            ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNum_Cost(InvoiceNumber, TotalCost), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+                //    string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND TotalCost = " + cost;
+                ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceNum_Cost(InvoiceNumber, TotalCost), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
                 }
-                    );
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -370,23 +562,32 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchDate_Cost()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-            ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceDate_Cost(InvoiceDate, TotalCost), ref res);
-
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+                ds = db.ExecuteSQLStatement(searchSQL.SearchInvoiceDate_Cost(InvoiceDate, TotalCost), ref res);
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
                 }
-                    );
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -397,23 +598,50 @@ namespace InvoiceSystem.Search
         /// <returns></returns>
         public ObservableCollection<InvoiceInfo> SearchAll()
         {
-            Invoices = new ObservableCollection<InvoiceInfo>();
-
-            DataSet ds;
-            int res = 0;
-
-            ds = db.ExecuteSQLStatement(searchSQL.Search_All(InvoiceNumber, InvoiceDate, TotalCost), ref res);
-            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            try
             {
-                Invoices.Add(new InvoiceInfo
+                Invoices = new ObservableCollection<InvoiceInfo>();
+
+                DataSet ds;
+                int res = 0;
+
+                ds = db.ExecuteSQLStatement(searchSQL.Search_All(InvoiceNumber, InvoiceDate, TotalCost), ref res);
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
-                    InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
-                    TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    Invoices.Add(new InvoiceInfo
+                    {
+                        InvoiceNumber = ds.Tables[0].Rows[i]["InvoiceNum"].ToString(),
+                        InvoiceDates = ds.Tables[0].Rows[i]["InvoiceDate"].ToString(),
+                        TotalCosts = ds.Tables[0].Rows[i]["TotalCost"].ToString()
+                    }
+                        );
                 }
-                    );
+                return Invoices;
             }
-            return Invoices;
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+        /// <summary>
+        /// Handle the error.
+        /// </summary>
+        /// <param name="sClass">The class in which the error occurred in.</param>
+        /// <param name="sMethod">The method in which the error occurred in.</param>
+        private void HandleError(string sClass, string sMethod, string sMessage)
+        {
+            try
+            {
+                //Would write to a file or database here.
+                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
         #endregion

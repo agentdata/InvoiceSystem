@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Reflection;
 using InvoiceSystem.Search;
+using System.Windows;
+
 
 namespace InvoiceSystem.Search
 {
@@ -19,9 +21,17 @@ namespace InvoiceSystem.Search
         /// </summary>
         public string getInvoiceNums()
         {
-
-            string sql = "SELECT InvoiceNum FROM Invoices";
-            return sql;
+            try
+            {
+                string sql = "SELECT InvoiceNum FROM Invoices";
+                return sql;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -30,8 +40,17 @@ namespace InvoiceSystem.Search
         /// </summary>
         public string getTotalCosts()
         {
-            string sql = "SELECT distinct(TotalCost) FROM Invoices ORDER BY TotalCost ASC";
-            return sql;
+            try
+            {
+                string sql = "SELECT distinct(TotalCost) FROM Invoices ORDER BY TotalCost ASC";
+                return sql;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -41,8 +60,17 @@ namespace InvoiceSystem.Search
         /// </summary>
         public string getInvoices()
         {
-            string sql = "Select * FROM Invoices";
-            return sql;
+            try
+            {
+                string sql = "Select * FROM Invoices";
+                return sql;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -54,8 +82,17 @@ namespace InvoiceSystem.Search
         /// <param name="num">the selected invoice number</param>
         public string SearchInvoiceNums(string num)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num;
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num;
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -66,8 +103,17 @@ namespace InvoiceSystem.Search
         /// <param name="costs"> the total costs </param>
         public string SearchtotalCosts(string costs)
         {
-            string sql = "SELECT * FROM Invoices WHERE TotalCost = " + costs;
-            return sql;
+            try
+            {
+                string sql = "SELECT * FROM Invoices WHERE TotalCost = " + costs;
+                return sql;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -78,8 +124,17 @@ namespace InvoiceSystem.Search
         /// <param name="date">the invoice date</param>
         public string SearchInvoiceDates(string date)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "#";
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "#";
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -91,8 +146,17 @@ namespace InvoiceSystem.Search
         /// <param name="date">the invoice date</param>
         public string SearchInvoiceNum_Date(string num, string date)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #" + date + "#";
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #" + date + "#";
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -104,8 +168,17 @@ namespace InvoiceSystem.Search
         /// <param name="cost">the invoice cost</param>
         public string SearchInvoiceNum_Cost(string num, string cost)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND TotalCost = " + cost;
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND TotalCost = " + cost;
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
 
@@ -117,8 +190,17 @@ namespace InvoiceSystem.Search
         /// <param name="cost">invoice cost</param>
         public string SearchInvoiceDate_Cost(string date, string cost)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "# " + "AND TotalCost = " + cost;
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceDate = #" + date + "# " + "AND TotalCost = " + cost;
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -129,9 +211,37 @@ namespace InvoiceSystem.Search
         /// <param name="cost">the total cost</param>
         public string Search_All(string num, string date, string cost)
         {
-            string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #"
-                + date + "# " + "AND TotalCost = " + cost;
-            return SQLStatment;
+            try
+            {
+                string SQLStatment = "SELECT * FROM Invoices WHERE InvoiceNum = " + num + "AND InvoiceDate = #"
+                    + date + "# " + "AND TotalCost = " + cost;
+                return SQLStatment;
+            }
+            catch (Exception ex)
+            {
+                //Just throw the exception
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Handle the error.
+        /// </summary>
+        /// <param name="sClass">The class in which the error occurred in.</param>
+        /// <param name="sMethod">The method in which the error occurred in.</param>
+        private void HandleError(string sClass, string sMethod, string sMessage)
+        {
+            try
+            {
+                //Would write to a file or database here.
+                MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
+                                             "HandleError Exception: " + ex.Message);
+            }
         }
 
     }
