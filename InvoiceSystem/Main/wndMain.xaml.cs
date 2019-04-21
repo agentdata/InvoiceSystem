@@ -45,19 +45,8 @@ namespace InvoiceSystem.Main
         {
             InitializeComponent();
             this.viewNavigationController = viewNavigationController;
-            IntitialWindowLoad();
-            DataContext = this;
-        }
-        #endregion
-
-        #region Other Methods
-        
-        /// <summary>
-        /// Tasks to complete when this view initially loads
-        /// </summary>
-        private void IntitialWindowLoad()
-        {
             Invoices = clsMainLogic.getAllInvoices(Invoices);
+            DataContext = this;
         }
         #endregion
 
@@ -73,8 +62,7 @@ namespace InvoiceSystem.Main
             DataGridRow row = sender as DataGridRow;
             if (row != null)
             {
-                Invoice selectedInvoice = row.Item as Invoice;
-                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, selectedInvoice));
+                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, (row.Item as Invoice)));
             }
         }
 
@@ -86,19 +74,12 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void InvoiceRowRightClickEdit_Action(object sender, RoutedEventArgs e)
         {
-            //Get the clicked MenuItem
-            var menuItem = (MenuItem)sender;
-
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu)menuItem.Parent;
-
             //Find the placementTarget
-            var row = (DataGridRow)contextMenu.PlacementTarget;
-
+            var row = (DataGridRow)((ContextMenu)((MenuItem)sender).Parent).PlacementTarget;
+            //if row is not null then open the invoice up in the modifyinvoice screen
             if (row != null)
             {
-                Invoice selectedInvoice = row.Item as Invoice;
-                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x => x.InvoiceNum == selectedInvoice.InvoiceNum).FirstOrDefault()));
+                viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController, Invoices.InvoicesCollection.Where(x => x.InvoiceNum == (row.Item as Invoice).InvoiceNum).FirstOrDefault()));
             }
         }
 
@@ -111,22 +92,11 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void GridViewRightClickDelete_Action(object sender, RoutedEventArgs e)
         {
-            //Get the clicked MenuItem
-            var menuItem = (MenuItem)sender;
-
-            //Get the ContextMenu to which the menuItem belongs
-            var contextMenu = (ContextMenu)menuItem.Parent;
-
-            //Find the placementTarget
-            var row = (DataGridRow)contextMenu.PlacementTarget;
-            MessageBoxResult shouldBeDeleted = MessageBox.Show("Are you sure you want to delete invoice #" + row.GetType(), "Confirm Delete Invoice?", MessageBoxButton.YesNo);
-
-            if (row != null && shouldBeDeleted == MessageBoxResult.Yes)
-            {
-                clsMainSQL.deleteInvoice(row.Item as Invoice);
-            }
             //trigger stats update by just reloading the view
-            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+            if (clsMainLogic.deleteInvoice(sender))
+            {
+                viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+            }
         }
         #endregion UI Action
     }

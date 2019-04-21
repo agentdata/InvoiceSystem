@@ -34,7 +34,7 @@
                FontWeight="SemiBold"
                TextAlignment="Center"
                DockPanel.Dock="Top" />
-                <DataGrid  ItemsSource="{Binding Path=shoppingCart.lineItems, Mode=TwoWay}" AutoGenerateColumns="False">
+                <DataGrid  Name="SelectedItemsDataGrid_DataGrid" ItemsSource="{Binding Path=shoppingCart.lineItems, Mode=TwoWay}" AutoGenerateColumns="False">
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RightClick_ContextMenu">
                             <MenuItem Header="_Edit" />
@@ -51,7 +51,36 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Item Code" Binding="{Binding Item.ItemCode}" Width="Auto" IsReadOnly="True" />
                         <DataGridTextColumn Header="Cost" Binding="{Binding Item.Cost}" Width="Auto" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" IsReadOnly="False"/>
+                        <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="Auto" IsReadOnly="False"/>
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Name="IncreaseQuantityButton_Button" Click="IncreaseQuantityByOneButton_Action">
+                                        <Image Source="\App_Resources\Images\Other_Icons\add.png" Width="15" Height="15"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="DecreaseQuantityByOneButton_Action">
+                                        <Image Source="\App_Resources\Images\Other_Icons\minus.png" Width="15" Height="15"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="DeleteLineItemButton_Action">
+                                        <Image Source="\App_Resources\Images\Other_Icons\delete.png" Width="15" Height="15"/>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>

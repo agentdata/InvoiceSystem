@@ -2,6 +2,7 @@
 using InvoiceSystem.Items;
 using InvoiceSystem.OtherClasses;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -51,7 +52,7 @@ namespace InvoiceSystem.Main
         private readonly ViewNavigationController viewNavigationController;
         // Event to be raised whena property is modified so the view stays up to date.
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         #endregion Fields
 
         #region Constructors
@@ -145,5 +146,89 @@ namespace InvoiceSystem.Main
             }
         }
         #endregion UI Actions
+        private IEnumerable<DataGridRow> GetDataGridRowsForButtons(DataGrid grid)
+        { //IQueryable 
+            var itemsSource = grid.ItemsSource as IEnumerable;
+            if (null == itemsSource) yield return null;
+            foreach (var item in itemsSource)
+            {
+                var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
+                if (null != row & row.IsSelected) yield return row;
+            }
+        }
+        private void IncreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
+        {
+
+            LineItem selectedLineItem = null;
+
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow)
+                {
+                    // var row = (DataGrid)vis;
+
+                    var rows = GetDataGridRowsForButtons(existingLineItem_DataGrid);
+                    string id;
+                    foreach (DataGridRow dr in rows)
+                    {
+                        selectedLineItem = (dr.Item as LineItem);
+                        
+                        break;
+                    }
+                    break;
+                }
+            if (selectedLineItem != null)
+            {
+                clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref selectedLineItem, "increase");
+            }
+        }
+
+        private void DecreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
+        {
+            LineItem selectedLineItem = null;
+            
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow)
+                {
+                    // var row = (DataGrid)vis;
+
+                    var rows = GetDataGridRowsForButtons(existingLineItem_DataGrid);
+                    foreach (DataGridRow dr in rows)
+                    {
+                        selectedLineItem = (dr.Item as LineItem);
+                        break;
+                    }
+                    break;
+                }
+            if (selectedLineItem != null)
+            {
+                clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref selectedLineItem, "decrease");
+            }
+        }
+
+        private void DeleteLineItemButton_Action(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("are you sure you want to delete this item?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                LineItem selectedLineItem = null;
+
+                for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                    if (vis is DataGridRow)
+                    {
+                        // var row = (DataGrid)vis;
+
+                        var rows = GetDataGridRowsForButtons(existingLineItem_DataGrid);
+                        foreach (DataGridRow dr in rows)
+                        {
+                            selectedLineItem = (dr.Item as LineItem);
+                            break;
+                        }
+                        break;
+                    }
+                if (selectedLineItem != null)
+                {
+                    
+                }
+            }
+        }
     }
 }

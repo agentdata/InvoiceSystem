@@ -186,17 +186,6 @@
     <Resource Include="App_Resources\Fonts\Roboto\Roboto-Regular.ttf" />
     <Resource Include="App_Resources\Fonts\Roboto\Roboto-Thin.ttf" />
     <Resource Include="App_Resources\Fonts\Roboto\Roboto-ThinItalic.ttf" />
-    <None Include="InvoiceDBDataSet.xsc">
-      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="InvoiceDBDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>InvoiceDBDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="InvoiceDBDataSet.xss">
-      <DependentUpon>InvoiceDBDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -220,11 +209,10 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="App_Resources\Images\Menu_Icons\Home-512.png" />
-    <Resource Include="App_Resources\Images\Menu_Icons\delete.png" />
+    <Resource Include="App_Resources\Images\Other_Icons\delete.png" />
     <Resource Include="App_Resources\Images\Menu_Icons\add.png" />
-    <Content Include="InvoiceDB.accdb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="App_Resources\Images\Other_Icons\add.png" />
+    <Resource Include="App_Resources\Images\Other_Icons\minus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

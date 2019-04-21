@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,10 +8,15 @@ using System.Threading.Tasks;
 
 namespace InvoiceSystem.Classes
 {
-    public class LineItems
+    public class LineItems : IEnumerable
     {
         public ObservableCollection<LineItem> lineItems { get; set; } = new ObservableCollection<LineItem>();
         public int TotalLineItems { get; set; } = 0;
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return lineItems.GetEnumerator();
+        }
 
         public void addLineItem(LineItem LineItem)
         {
@@ -28,6 +34,21 @@ namespace InvoiceSystem.Classes
                 }
             }
             return false;
+        }
+
+        public IEnumerator GetEnumerator()
+        {
+            return lineItems.GetEnumerator();
+        }
+
+        internal void Remove(object p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object Where(Func<object, bool> p)
+        {
+            throw new NotImplementedException();
         }
     }
 }

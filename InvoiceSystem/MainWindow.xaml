@@ -26,23 +26,23 @@
         <!-- Menu bar-->
         <DockPanel Name="Menu_DockPanel" >
             <Menu DockPanel.Dock="Top" Style="{StaticResource MenuTextStyle}">
-                <MenuItem Header="_File"  MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
-                    <MenuItem Header="Settings" />
+                <MenuItem Header="_File">
+                    <MenuItem Header="Settings" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
                 </MenuItem>
-                <MenuItem Header="_Invoices" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
-                    <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action"/>
+                <MenuItem Header="_Invoices">
+                    <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
                     <Separator/>
                     <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
                     <Separator/>
-                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action"/>
+                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action" />
                 </MenuItem>
-                <MenuItem Header="_Items" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
-                    <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action"/>
+                <MenuItem Header="_Items">
+                    <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
                 </MenuItem>
-                <MenuItem Header="_Help" MouseEnter="MenuBarSettingsButtonFocus_Action" MouseLeave="MenuBarSettingsButtonDeFocus_Action">
-                    <MenuItem Header="_About" Click="MenuBarAboutItem_Action"/>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Click="MenuBarAboutItem_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

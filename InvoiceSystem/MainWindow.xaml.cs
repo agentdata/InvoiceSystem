@@ -107,36 +107,40 @@ namespace InvoiceSystem
         #endregion Menu Buttons
 
         #region UI 
-        private void MenuBarSettingsButtonDeFocus_Action(object sender, MouseEventArgs e)
-        {
-            MainContentPresenter_ContentPresenter.IsEnabled = true;
-            if (!Menu_DockPanel.IsEnabled)
-            {
-                Menu_DockPanel.IsEnabled = true;
-            }
-        }
-
-        private void MenuBarSettingsButtonFocus_Action(object sender, MouseEventArgs e)
-        {
-            MainContentPresenter_ContentPresenter.IsEnabled = false;
-            if (!Menu_DockPanel.IsEnabled)
-            {
-                Menu_DockPanel.IsEnabled = true;
-            }
-        }
 
         private void ChangeDisabledForegroundAndOpacity_Action(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (MainContentPresenter_ContentPresenter.IsEnabled)
             {
                 OpaqueContentCover_Label.Visibility = Visibility.Hidden;
-                
+
             }
             else
             {
                 OpaqueContentCover_Label.Visibility = Visibility.Visible;
             }
         }
+
+        private void MenuItem_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue)
+            {
+                MainContentPresenter_ContentPresenter.IsEnabled = false;
+                if (!Menu_DockPanel.IsEnabled)
+                {
+                    Menu_DockPanel.IsEnabled = true;
+                }
+            }
+            else
+            {
+                MainContentPresenter_ContentPresenter.IsEnabled = true;
+                if (!Menu_DockPanel.IsEnabled)
+                {
+                    Menu_DockPanel.IsEnabled = true;
+                }
+            }
+        }
+
         #endregion UI
     }
 }
