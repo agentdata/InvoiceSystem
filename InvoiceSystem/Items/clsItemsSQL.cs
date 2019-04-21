@@ -55,6 +55,16 @@ namespace InvoiceSystem.Items
             }
         }
 
+        public int ItemOnInvoice(string itemcode)
+        {
+            //return count
+            string sSQL = "SELECT * FROM LineItems WHERE ItemCode = '" + itemcode + "'";
+            int iRetVal = 0;
+
+            Data.ExecuteSQLStatement(sSQL, ref iRetVal);
+
+            return iRetVal;
+        }
         #endregion
 
         #region NonQueries

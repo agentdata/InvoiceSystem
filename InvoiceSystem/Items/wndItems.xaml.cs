@@ -99,6 +99,8 @@ namespace InvoiceSystem.Items
         {
             try
             {
+                ItemDataGrid.IsEnabled = true;
+
                 CodeText.IsEnabled = false;
 
                 AddButton.IsEnabled = true;
@@ -134,10 +136,12 @@ namespace InvoiceSystem.Items
         {
             try
             {
+                int index = ItemDataGrid.SelectedIndex;
 
-                if (!IsEditing)
+                //if (!IsEditing)
+                if (index > -1)
                 {
-                    int index = ItemDataGrid.SelectedIndex;
+                    //int index = ItemDataGrid.SelectedIndex;
 
                     CodeText.Text = clsItemsLogic.ItemsList[index].ItemCode;
                     CostText.Text = clsItemsLogic.ItemsList[index].Cost;
@@ -242,6 +246,7 @@ namespace InvoiceSystem.Items
         {
             try
             {
+                ItemDataGrid.IsEnabled = false;
                 //Changes grid select to be -1 (or similar)
                 //Clears CodeText, CostText, and DescText
                 //enable Submit/Cancel button;
@@ -259,10 +264,6 @@ namespace InvoiceSystem.Items
                 AddButton.IsEnabled = false;
                 EditButton.IsEnabled = false;
                 DeleteButton.IsEnabled = false;
-                
-                
-
-
             }
             catch (System.Exception ex)
             {
@@ -282,6 +283,8 @@ namespace InvoiceSystem.Items
             
             try
             {
+                ItemDataGrid.IsEnabled = false;
+
                 IsEditing = true;
 
                 AddButton.IsEnabled = false;
@@ -318,20 +321,30 @@ namespace InvoiceSystem.Items
                 string desc = DescText.Text;
                 string cost = CostText.Text;
 
-                if (index > 0)
+                if (clsItemsLogic.ItemIsUsed(code))
                 {
-                    ItemDataGrid.SelectedIndex = index -1;
+                    //Pop up message.
+                    MessageBox.Show("This Item is in use on at least one invoice, so it can't be deleted.");
                 }
                 else
                 {
-                    ItemDataGrid.SelectedIndex = -1;
+                    if (index > 0)
+                    {
+                        ItemDataGrid.SelectedIndex = index - 1;
+                    }
+                    else
+                    {
+                        ItemDataGrid.SelectedIndex = -1;
+                    }
+
+
+                    clsItemsLogic.DeleteItem(code, desc, cost, index);
+                    CodeText.Text = "";
+                    CostText.Text = "";
+                    DescText.Text = "";
                 }
 
-
-                clsItemsLogic.DeleteItem(code, desc, cost, index);
-                CodeText.Text = "";
-                CostText.Text = "";
-                DescText.Text = "";
+                
             }
             catch (System.Exception ex)
             {

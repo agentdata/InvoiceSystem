@@ -16,7 +16,7 @@ namespace InvoiceSystem.Items
         /// <summary>
         /// Instance of the SQL Query class for Items.
         /// </summary>
-        public static clsItemsSQL SQL;
+        public static clsItemsSQL SQL = new clsItemsSQL();
         /// <summary>
         /// Stores a list of Items returns from the database.
         /// </summary>
@@ -34,8 +34,7 @@ namespace InvoiceSystem.Items
         /// </summary>
         public clsItemsLogic ()
         {
-            SQL = new clsItemsSQL();
-            
+            //ItemsList = new BindingList<Item>();
         }
                 
         /// <summary>
@@ -47,6 +46,7 @@ namespace InvoiceSystem.Items
             try
             {
                 ItemsList = new BindingList<Item>(SQL.GetAllItems());
+
             }
             catch (Exception ex)
             {
@@ -125,6 +125,24 @@ namespace InvoiceSystem.Items
                 throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Determines if the given Item is used on an invoice.  Returns true or false
+        /// based on result.
+        /// </summary>
+        /// <param name="itemcode"></param>
+        public static bool ItemIsUsed(string itemcode)
+        {
+            if (SQL.ItemOnInvoice(itemcode) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         #endregion
 
