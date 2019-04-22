@@ -85,17 +85,6 @@ namespace InvoiceSystem.Main
         }
 
         /// <summary>
-        /// This doubleclick action brings up a small item window which displays everything about the item selected.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RowItem_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            DataGridRow row = sender as DataGridRow;
-            if (row != null && row.Item != null) { (new ViewItemDesc((row.Item as LineItem).Item)).Show(); }
-        }
-
-        /// <summary>
         /// This method is called when an item in the available items datagrid is double clicked.
         /// It adds a new line item to the invoice, or adds 1 if the item already exists in the current invoice.
         /// </summary>
