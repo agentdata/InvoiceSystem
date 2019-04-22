@@ -129,6 +129,17 @@ namespace InvoiceSystem.Items
 
         #region Selection/Validation
         /// <summary>
+        /// Validates input to make sure cost and code are not empty.
+        /// </summary>
+        private bool ValidateInput()
+        {
+            if (CodeText.Text == "" || CostText.Text == "")
+            {
+                return false;
+            }
+            else return true;
+        }
+        /// <summary>
         /// Event that is triggered when a selection is made in the Item Data Grid.
         /// </summary>
         /// <param name="sender"></param>
@@ -212,8 +223,8 @@ namespace InvoiceSystem.Items
         }
 
         /// <summary>
-        /// allows the user to use alpha numeric keys along with backspace,
-        /// delete, tab, and enter.
+        /// Allows the user to use alpha numeric keys along with backspace,
+        /// delete, tab, space and enter.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -226,6 +237,33 @@ namespace InvoiceSystem.Items
                 {
                     //Allow backspace, delete, tab and enter
                     if (!(e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Tab || e.Key == Key.Enter || e.Key == Key.Space))
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Allows the user to use alpha numeric keys along with backspace,
+        /// delete, tab, and enter.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CodeValidation(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                //Letters & numbers
+                if (!(e.Key >= Key.D0 && e.Key <= Key.Z))
+                {
+                    //Allow backspace, delete, tab and enter
+                    if (!(e.Key == Key.Back || e.Key == Key.Delete || e.Key == Key.Tab || e.Key == Key.Enter))
                     {
                         e.Handled = true;
                     }
@@ -411,20 +449,26 @@ namespace InvoiceSystem.Items
             
             try
             {
-                if (IsEditing)
+                if (ValidateInput())
                 {
-                    clsItemsLogic.UpdateItem(CodeText.Text, DescText.Text, CostText.Text, ItemDataGrid.SelectedIndex);
-                    ReadView();
-                    IsEditing = false;
+                    if (IsEditing)
+                    {
+                        clsItemsLogic.UpdateItem(CodeText.Text, DescText.Text, CostText.Text, ItemDataGrid.SelectedIndex);
+                        ReadView();
+                        IsEditing = false;
+                    }
+                    else
+                    {
+                        clsItemsLogic.AddItem(CodeText.Text, DescText.Text, CostText.Text);
+                        ReadView();
+                        ItemDataGrid.SelectedIndex = clsItemsLogic.ItemsList.Count - 1;
+                    }
                 }
                 else
                 {
-                    clsItemsLogic.AddItem(CodeText.Text, DescText.Text, CostText.Text);
-                    ReadView();
-                    ItemDataGrid.SelectedIndex = clsItemsLogic.ItemsList.Count - 1;
+                    MessageBox.Show("Both Code and Cost must not be empty.");
                 }
 
-                
             }
             catch (System.Exception ex)
             {

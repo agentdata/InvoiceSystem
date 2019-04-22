@@ -19,7 +19,7 @@
         <Button x:Name="SubmitButton" Content="Submit" FontSize="30" Margin="425,471,209,68" Click="SubmitButton_Click"/>
         <DataGrid x:Name="ItemDataGrid" HorizontalAlignment="Left" Margin="28,103,0,0" VerticalAlignment="Top" Height="345" Width="352" SelectionChanged="ItemSelection" CanUserReorderColumns="False" CanUserResizeRows="False" FontSize="17" IsReadOnly="True"/>
         <Label x:Name="CodeLabel" Content="Code" HorizontalAlignment="Left" Margin="436,80,0,0" VerticalAlignment="Top" Width="139" Height="42" FontSize="19" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="CodeText" HorizontalAlignment="Left" Height="51" Margin="412,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center" PreviewKeyDown="KeyValidation" IsEnabled="False" MaxLength="4"/>
+        <TextBox x:Name="CodeText" HorizontalAlignment="Left" Height="51" Margin="412,125,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="193" FontSize="24" VerticalContentAlignment="Center" PreviewKeyDown="CodeValidation" IsEnabled="False" MaxLength="4"/>
         <Button x:Name="DeleteButton" Content="Delete" FontSize="30" Margin="647,299,10,240" Click="DeleteButton_Click" IsEnabled="False"/>
         <Button x:Name="EditButton" Content="Edit" FontSize="30" Margin="647,211,10,334" Click="EditButton_Click" IsEnabled="False"/>
         <Button x:Name="AddButton" Content="Add" FontSize="30" Margin="647,125,10,418" Click="AddButton_Click"/>
