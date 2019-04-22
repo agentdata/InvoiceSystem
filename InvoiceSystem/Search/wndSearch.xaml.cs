@@ -105,7 +105,7 @@ namespace InvoiceSystem.Search
                 if (selected == true)
                 {
                     viewNavigationController.ChangeCurrentView(new ModifyInvoice(this.viewNavigationController,
-                        new Invoice(logic.SelectedInvoiceNum,logic.SelectedInvoiceDate,logic.SelectedTotalCost)));
+                        new Invoice(logic.SelectedInvoiceNum,logic.SelectedInvoiceDate,logic.SelectedTotalCost), "GetInvoiceItems"));
                     //the selected invoice number , the date and the total cost go into the invoice field 
                     selected = false;
                 }
