@@ -16,11 +16,11 @@
 
         <DatePicker x:Name="InvoiceDate" HorizontalAlignment="Left" Margin="317,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.851,1.341" SelectedDateChanged="InvoiceDate_SelectedDateChanged"/>
 
-        <DataGrid x:Name="InvoiceDataGrid" HorizontalAlignment="Left" DataContext="{Binding Path= Invoices}"  CanUserAddRows="False" AutoGenerateColumns="False" Height="210" Margin="39,240,0,0" VerticalAlignment="Top" Width="650" SelectionChanged="InvoiceDataGrid_SelectionChanged">
+        <DataGrid x:Name="InvoiceDataGrid" HorizontalAlignment="Left" IsReadOnly="True" DataContext="{Binding Path= Invoices}"  CanUserAddRows="False" AutoGenerateColumns="False" Height="210" Margin="39,240,0,0" VerticalAlignment="Top" Width="650" SelectionChanged="InvoiceDataGrid_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header=" Invoice Number" Binding="{Binding Path=InvoiceNumber }" Width="200"/>
-                <DataGridTextColumn Header="Invoice Date" Binding="{Binding Path=InvoiceDates}" Width="240"/>
-                <DataGridTextColumn Header="Total Cost" Binding="{Binding Path= TotalCosts}" Width="200"/>
+                <DataGridTextColumn Header=" Invoice Number" IsReadOnly="True" Binding="{Binding Path=InvoiceNumber }" Width="200"/>
+                <DataGridTextColumn Header="Invoice Date" IsReadOnly="True" Binding="{Binding Path=InvoiceDates}" Width="240"/>
+                <DataGridTextColumn Header="Total Cost" IsReadOnly="True" Binding="{Binding Path= TotalCosts}" Width="200"/>
             </DataGrid.Columns>
         </DataGrid>
 
