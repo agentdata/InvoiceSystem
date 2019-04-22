@@ -29,10 +29,12 @@ namespace InvoiceSystem.Main
         private readonly ViewNavigationController viewNavigationController;
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion Fields
-
+        //Collection of available items to display in the UI
         #region Properties
         public ObservableCollection<Item> AvailableItems { get; set; }
+        //This is the private LineItems collection that is populated when the user adds an itemf rom AvailableItems
         public LineItems _shoppingCart = new LineItems();
+        //This is the public getter/setter for the shopping cart. the UI is bound to this element.
         public LineItems shoppingCart {
             get { return _shoppingCart; }
             set
@@ -46,6 +48,7 @@ namespace InvoiceSystem.Main
         }
         //The shopping cart total.
         private int _runningTotal = 0;
+        //This is the running total for all the lineItems
         public int runningTotal 
         {
             get { return _runningTotal; }
@@ -85,11 +88,18 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
-            //Call the method to create a new invoice with the selected items, current time and running total.
-            clsMainLogic.submitNewInvoice(new Invoice(DateTime.Now.ToString(), runningTotal.ToString(), shoppingCart));
-            
-            //Return to main screen
-            viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+            if (shoppingCart.TotalLineItems == 0)
+            {
+                MessageBox.Show("You must first add Items to the list to submit an invoice.", "Error submitting");
+            }
+            else
+            {
+                //Call the method to create a new invoice with the selected items, current time and running total.
+                clsMainLogic.submitNewInvoice(new Invoice(DateTime.Now.ToString(), runningTotal.ToString(), shoppingCart));
+
+                //Return to main screen
+                viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
+            }
         }
 
         /// <summary>
@@ -117,6 +127,12 @@ namespace InvoiceSystem.Main
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(shoppingCart)));
         }
 
+        /// <summary>
+        /// This helps the add subtract and delete functions to find which row item the button was located in
+        /// so that the correct lineitem can be edited.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         private IEnumerable<DataGridRow> GetDataGridRowsForButtons(DataGrid grid)
         { //IQueryable 
             var itemsSource = grid.ItemsSource as IEnumerable;
@@ -128,6 +144,11 @@ namespace InvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// This button action adds 1 to the specified line item in the selected items list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IncreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
         {
 
@@ -155,6 +176,11 @@ namespace InvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// This function decreases the count for the specified item by 1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DecreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
         {
             LineItem selectedLineItem = null;
@@ -172,8 +198,10 @@ namespace InvoiceSystem.Main
                     }
                     break;
                 }
+            //null check
             if (selectedLineItem != null)
             {
+
                 if (shoppingCart.lineItems.Where(x => x.Item.ItemCode == selectedLineItem.Item.ItemCode).FirstOrDefault().Quantity == 1)
                 {
                     if (MessageBox.Show("are you sure you want to delete this item?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -186,6 +214,11 @@ namespace InvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// This function removes the specified line item from the selected items list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteLineItemButton_Action(object sender, RoutedEventArgs e)
         {
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -94,10 +95,12 @@ namespace InvoiceSystem.Main
             return ItemCollection;
         }
 
+        /// <summary>
+        /// This creates a new
+        /// </summary>
+        /// <param name="NewInvoice"></param>
         internal static void submitNewInvoice(Invoice NewInvoice)
         {
-            try
-            {
                 //create invoice
                 clsMainSQL.InsertInvoice(NewInvoice.InvoiceDate, Int32.Parse(NewInvoice.TotalCost));
 
@@ -113,8 +116,6 @@ namespace InvoiceSystem.Main
                     int lineItemNum = rows + 1;
                     clsMainSQL.addNewLineItemSQL(rows + 1, invoiceNum, newLineItem);                    
                 }
-            }
-            catch { }
         }
 
         /// <summary>

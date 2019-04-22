@@ -139,10 +139,7 @@ namespace InvoiceSystem.Main
             for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
                 if (vis is DataGridRow)
                 {
-                    // var row = (DataGrid)vis;
-
                     var rows = GetDataGridRowsForButtons(existingLineItem_DataGrid);
-                    string id;
                     foreach (DataGridRow dr in rows)
                     {
                         selectedLineItem = (dr.Item as LineItem);
