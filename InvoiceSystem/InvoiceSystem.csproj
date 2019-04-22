@@ -206,7 +206,11 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="InvoiceDB.accdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="App_Resources\Images\Menu_Icons\Home-512.png" />
     <Resource Include="App_Resources\Images\Other_Icons\delete.png" />

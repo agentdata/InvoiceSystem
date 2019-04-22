@@ -198,6 +198,13 @@ namespace InvoiceSystem.Main
             return Invoices;
         }
 
+        internal static void AddNewLineItemToExistingInvoice(ref Invoice currentInvoice, Item selectedItem, int v)
+        {
+            int NumLineItemRows = new int();
+            clsMainSQL.getLineItems(ref NumLineItemRows);
+            clsMainSQL.addNewLineItemSQL(NumLineItemRows, currentInvoice.InvoiceNum,new LineItem(selectedItem,1));
+        }
+
         internal static void addItemToCart(object sender, ref LineItems _shoppingCart, ref int _runningTotal)
         {
             //if(CurrentInvoice.LineItems.Where())
@@ -243,6 +250,7 @@ namespace InvoiceSystem.Main
             if(increaseOrDecrease == "increase")
             {
                 selectedLineItem.Quantity++;
+                clsMainSQL.UpdateLineItemSQL(_CurrentInvoice.InvoiceNum, selectedLineItem.Item.ItemCode, selectedLineItem.Quantity);
                 
             }
             else if (increaseOrDecrease == "decrease")
@@ -250,10 +258,21 @@ namespace InvoiceSystem.Main
                 //if decrease results in 0 then delete the item
                 if (selectedLineItem.Quantity == 1)
                 {
-                    
-                    
+                    var _selectedLineItem = selectedLineItem;
+                    _CurrentInvoice.LineItems.Remove(_CurrentInvoice.LineItems.lineItems.Where(x => x == _selectedLineItem).FirstOrDefault());
+                    clsMainSQL.DeleteLineItem(_CurrentInvoice.InvoiceNum, selectedLineItem.Item.ItemCode);
                 }
-                else selectedLineItem.Quantity--;
+                else
+                {
+                    selectedLineItem.Quantity--;
+                    clsMainSQL.UpdateLineItemSQL(_CurrentInvoice.InvoiceNum, selectedLineItem.Item.ItemCode, selectedLineItem.Quantity);
+                }
+            }
+            else if(increaseOrDecrease == "delete")
+            {
+                var _selectedLineItem = selectedLineItem;
+                _CurrentInvoice.LineItems.Remove(_CurrentInvoice.LineItems.lineItems.Where(x => x == _selectedLineItem).FirstOrDefault());
+                clsMainSQL.DeleteLineItem(_CurrentInvoice.InvoiceNum, selectedLineItem.Item.ItemCode);
             }
         }
 

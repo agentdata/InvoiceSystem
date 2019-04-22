@@ -213,7 +213,6 @@ namespace InvoiceSystem.Main
                 }
             }
         }
-
         #endregion UI Actions
     }
 }
