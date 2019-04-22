@@ -136,7 +136,8 @@ namespace InvoiceSystem.Search
             {
                 //resets for a new search 
                 logic.resetSearch();
-                //set the datagrid back to how it was when the window first opens
+                //refresh the datagrid
+                InvoiceDataGrid.Items.Refresh();
                 InvoiceDataGrid.ItemsSource = logic.GetInvoices();
             }
             catch (Exception ex)
@@ -223,9 +224,10 @@ namespace InvoiceSystem.Search
                         logic.resetSearch();
                         startsearch = false;
                     }
-
-
+                    startsearch = false;
+                    logic.resetSearch();
                 }
+            
 
                 //show a messagebox if startsearch if false
                 else
@@ -313,7 +315,9 @@ namespace InvoiceSystem.Search
         {
             try
             {
-                DateTime? date = InvoiceDate.SelectedDate;
+                var picker = sender as DatePicker;
+
+                DateTime? date = picker.SelectedDate;
                 if (date.HasValue)
                 {
                     logic.getDate = date.Value.ToShortDateString();
@@ -337,6 +341,7 @@ namespace InvoiceSystem.Search
         {
             try
             {
+               
                 var cellInfo = InvoiceDataGrid.SelectedCells[0]; //gets the selected item at the first cell of the datagrid 
                 logic.SelectedInvoiceNum = (cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock).Text;
                 var cellInfo2 = InvoiceDataGrid.SelectedCells[1]; //gets the selected item at the second cell of the datagrid 

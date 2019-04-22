@@ -276,7 +276,9 @@ namespace InvoiceSystem.Search
                 InvoiceNumber = null;
                 InvoiceDate = null;//set to a default date // temp for now 
                 TotalCost = null;
-                
+                selectedNumber = "";
+                selectedDate = "";
+                SelectedTotalCost = "";
             }
             catch (Exception ex)
             {

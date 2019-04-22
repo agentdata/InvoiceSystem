@@ -27,6 +27,9 @@
         <Button x:Name="SelectInvoiceButton" Content="Select Invoice" HorizontalAlignment="Left" Margin="89,153,0,0" VerticalAlignment="Top" Width="100" Click="SelectInvoiceButton_Click"/>
         <Button x:Name="ClearButton" Content="Clear" HorizontalAlignment="Left" Margin="539,153,0,0" VerticalAlignment="Top" Width="100" Click="ClearButton_Click"/>
         <Button x:Name="FilterButton" Content="Filter" HorizontalAlignment="Left" Margin="332,153,0,0" VerticalAlignment="Top" Width="83" Click="FilterButton_Click"/>
+        <Label Content="Invoice Numbers" HorizontalAlignment="Left" Margin="75,22,0,0" VerticalAlignment="Top" Width="95"/>
+        <Label Content="Total Costs" HorizontalAlignment="Left" Margin="556,22,0,0" VerticalAlignment="Top" Width="114"/>
+        <Label Content="Date" HorizontalAlignment="Left" Margin="317,22,0,0" VerticalAlignment="Top" Width="98"/>
 
     </Grid>
 </UserControl>
