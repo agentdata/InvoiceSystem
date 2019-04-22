@@ -70,6 +70,7 @@ namespace InvoiceSystem.Items
             {
                 SQL.AddNewItem(itemcode, itemdesc, cost);
                 ItemsList.Add(new Item(itemcode, itemdesc, cost));
+
             }
             catch (Exception ex)
             {
@@ -143,6 +144,15 @@ namespace InvoiceSystem.Items
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// Hands the affected item code to update affected invoice costs.
+        /// </summary>
+        /// <param name="itemcode"></param>
+        public static void InvoiceCostUpdate(string itemcode)
+        {
+            SQL.UpdateInvoice(itemcode);
         }
         #endregion
 

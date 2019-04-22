@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -44,7 +45,7 @@
                FontWeight="SemiBold"
                TextAlignment="Center"
                DockPanel.Dock="Top" />
-            <!--This datagrid displays all the existing line items for the selected invoice-->
+
             <DataGrid Name="existingLineItem_DataGrid" ItemsSource="{Binding Path=CurrentInvoice.LineItems.lineItems, Mode=TwoWay}" AutoGenerateColumns="False">
                 <DataGrid.Resources>
                     <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
@@ -53,11 +54,9 @@
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
-                    <!--Binding the columns to elemtns of the invoice lineitems-->
                     <DataGridTextColumn Header="Item Code" Binding="{Binding Item.ItemCode}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Item Price" Binding="{Binding Item.Cost}" IsReadOnly="True" Width="*"/>
                     <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, ValidatesOnExceptions=True}" IsReadOnly="True" Width="*"/>
-                    <!--Buttons in the grid for add, subtract and delete-->
                     <DataGridTemplateColumn Width="Auto">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -112,7 +111,6 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <!--Binding the columns to elemtns of the invoice lineitems-->
                     <DataGridTextColumn Header="Item Code" Binding="{Binding ItemCode}" Width="Auto" IsReadOnly="True" />
                     <DataGridTextColumn Header="Cost" Binding="{Binding Cost}" Width="Auto" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Description" Binding="{Binding ItemDesc}" Width="*" IsReadOnly="True"/>

@@ -463,6 +463,7 @@ namespace InvoiceSystem.Items
                         ReadView();
                         ItemDataGrid.SelectedIndex = clsItemsLogic.ItemsList.Count - 1;
                     }
+                    clsItemsLogic.InvoiceCostUpdate(CodeText.Text);
                 }
                 else
                 {

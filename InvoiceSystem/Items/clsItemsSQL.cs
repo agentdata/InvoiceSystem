@@ -135,6 +135,73 @@ namespace InvoiceSystem.Items
                                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Updates Total cost of invoices
+        /// </summary>
+        /// <param name="itemcode"></param>
+        /// <param name="itemdesc"></param>
+        /// <param name="cost"></param>
+        public void UpdateInvoice(string itemcode)
+        {
+            try
+            {
+                List<string> invoice = new List<string>();
+                List<string> quantityList = new List<string>();
+                List<string> costlist = new List<string>();
+                int prod = 0;
+
+                List<string> quantityList2 = new List<string>();
+                List<string> costlist2 = new List<string>();
+                int prod2 = 0;
+
+                string sSQL = "SELECT l.invoicenum, l.quantity, i.cost from LineItems l INNER JOIN itemdesc i on l.Itemcode = i.itemcode WHERE l.itemcode = '" + itemcode + "'";
+                int iRetVal = 0;
+
+                DataSet ds = Data.ExecuteSQLStatement(sSQL, ref iRetVal);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    invoice.Add(dr[0].ToString());
+                    quantityList.Add(dr[1].ToString());
+                    costlist.Add(dr[2].ToString());
+                }
+
+                for (int i = 0; i < iRetVal; i++)
+                {
+                    sSQL = "Select SUM(Cost) AS Price, l.quantity FROM LineItems l INNER JOIN ItemDesc i on i.Itemcode = l.itemcode where i.itemcode <> '" + itemcode + "' AND InvoiceNum = " + invoice[i] + " GROUP BY l.Quantity";
+                    int iRetVal2 = 0;
+
+                    DataSet ds2 = Data.ExecuteSQLStatement(sSQL, ref iRetVal2);
+
+                    foreach (DataRow dr in ds2.Tables[0].Rows)
+                    {
+                        quantityList2.Add(dr[0].ToString());
+                        costlist2.Add(dr[1].ToString());
+                    }
+
+                    Int32.TryParse(costlist2[i], out int cost2);
+                    Int32.TryParse(quantityList2[i], out int quantity2);
+                    prod2 = quantity2 * cost2;
+
+
+                    Int32.TryParse(costlist[i], out int cost);
+                    Int32.TryParse(quantityList[i], out int quantity);
+                    prod = quantity * cost;
+                    prod += prod2;
+
+                    sSQL = "Update Invoices Set TotalCost = '" + prod.ToString() + "' WHERE InvoiceNum = " + invoice[i]; // + "'";
+                    Data.ExecuteNonQuery(sSQL);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
         #endregion
     }
 
