@@ -337,20 +337,13 @@ namespace InvoiceSystem.Items
                     if (index > 0)
                     {
                         ItemDataGrid.SelectedIndex = index - 1;
-                        code = CodeText.Text;
-                        desc = DescText.Text;
-                        cost = CostText.Text;
                     }   
                     else
                     {
-                        ItemDataGrid.SelectedIndex = -1;
-                        CodeText.Text = "";
-                        CostText.Text = "";
-                        DescText.Text = "";
+                        ItemDataGrid.SelectedIndex = 0;
                     }
 
-
-                    clsItemsLogic.DeleteItem(code, desc, cost, index);
+                clsItemsLogic.DeleteItem(code, desc, cost, index);
                     
                 }
 
