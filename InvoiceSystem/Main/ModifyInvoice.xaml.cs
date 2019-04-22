@@ -29,6 +29,8 @@ namespace InvoiceSystem.Main
         #region Properties
         public ObservableCollection<Item> AvailableItems { get; set; }
         private Invoice _CurrentInvoice;
+        private string v;
+
         public Invoice CurrentInvoice
         {
             get { return _CurrentInvoice; }
@@ -65,6 +67,30 @@ namespace InvoiceSystem.Main
             CurrentInvoice = invoice;
             AvailableItems = clsMainLogic.GetAllItems();
             DataContext = this;
+        }
+
+        /// <summary>
+        /// This constructur takes in the invoice and string command,
+        /// if command is getinvoiceitems then it will query and get the items for this specific invoice and fill it in to the invoice object.
+        /// This is called from the search window.
+        /// </summary>
+        /// <param name="viewNavigationController"></param>
+        /// <param name="invoice"></param>
+        /// <param name="Command"></param>
+        public ModifyInvoice(ViewNavigationController viewNavigationController, Invoice invoice, string Command)
+        {
+            InitializeComponent();
+            this.viewNavigationController = viewNavigationController;
+            CurrentInvoice = invoice;
+            AvailableItems = clsMainLogic.GetAllItems();
+            DataContext = this;
+            if (Command == "GetInvoiceItems")
+            {
+                //gets all the line items and adds them to current invoice
+                clsMainLogic.getLineItems(ref _CurrentInvoice);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
+            }
+            
         }
         #endregion Constructors
 
@@ -116,7 +142,6 @@ namespace InvoiceSystem.Main
                 }
                 _CurrentInvoice.updateTotalCost();
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
-
             }
         }
         #endregion UI Actions
@@ -130,7 +155,13 @@ namespace InvoiceSystem.Main
                 if (null != row & row.IsSelected) yield return row;
             }
         }
-        
+
+        /// <summary>
+        /// the increasequantity button that shows up in the grid.
+        /// it adds 1 quantity to the row item from the invoice.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IncreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
         {
 
@@ -156,6 +187,12 @@ namespace InvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// the decrease quantity button that shows up in the grid.
+        /// it decreases the row item quantity from the invoice, if the quantity is at 1 then it deletes the row item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DecreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
         {
             LineItem selectedLineItem = null;
@@ -181,6 +218,12 @@ namespace InvoiceSystem.Main
             }
         }
 
+        /// <summary>
+        /// the deletelineitembutton that shows up in the grid.
+        /// it deletes the row item from the invoice.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteLineItemButton_Action(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("are you sure you want to delete this item?", "Confirm Deletion", MessageBoxButton.YesNo) == MessageBoxResult.Yes)

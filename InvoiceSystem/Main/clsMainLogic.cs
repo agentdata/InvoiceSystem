@@ -108,6 +108,36 @@ namespace InvoiceSystem.Main
             }
         }
 
+        internal static void getLineItems(ref Invoice currentInvoice)
+        {
+            #region Get Line Items
+            DataSet LineItems;
+            //get LineItems dataset
+            IEnumerable<object> tempItemCollection = null;
+            int LineItem_Rows = 0;
+
+            LineItems = clsMainSQL.getLineItemsForThisInvoice(currentInvoice.InvoiceNum, ref LineItem_Rows);
+
+            // do stuff with datasets
+            // Load invoices with correct number of items for the order
+            for (int i = 0; i < LineItem_Rows; i++)
+            {
+                var invoiceNum = LineItems.Tables[0].Rows[i]["InvoiceNum"].ToString();
+                var ItemCode = LineItems.Tables[0].Rows[i]["ItemCode"].ToString();
+                var LineItemNumber = LineItems.Tables[0].Rows[i]["LineItemNum"].ToString();
+                var Quantity = LineItems.Tables[0].Rows[i]["Quantity"].ToString();
+
+                //get this line item's item info and cost
+                DataSet itemInfo;
+                itemInfo = clsMainSQL.getItemInfo(ItemCode);
+                var cost = itemInfo.Tables[0].Rows[0]["Cost"].ToString();
+                var desc = itemInfo.Tables[0].Rows[0]["ItemDesc"].ToString();
+
+                currentInvoice.addItem(new Item(ItemCode, desc, cost), Int32.Parse( Quantity));
+            }
+            #endregion Link Items To Invoices
+        }
+
         /// <summary>
         /// This creates a new invoice in the database and adds all the lineitems to the database
         /// associated with the same invoice after retrieving its invoicenum.
