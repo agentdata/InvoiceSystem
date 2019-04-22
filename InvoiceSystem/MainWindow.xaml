@@ -27,19 +27,43 @@
         <DockPanel Name="Menu_DockPanel" >
             <Menu DockPanel.Dock="Top" Style="{StaticResource MenuTextStyle}">
                 <MenuItem Header="_File">
-                    <MenuItem Header="Settings" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
-                    <Separator/>
-                    <MenuItem Header="_Exit" Click="MenuBarExitButton_Action"/>
+                    <MenuItem Header="Settings" IsVisibleChanged="MenuItem_IsVisibleChanged" Click="MenuBarSettingsButton_Action">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/settings.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                        <Separator/>
+                    <MenuItem Header="_Exit" Click="MenuBarExitButton_Action">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/exit.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Invoices">
-                    <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
+                    <MenuItem Header="Invoices Home" Click="MenuBarMainButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/home.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
-                    <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action"/>
+                    <MenuItem Header="New Invoice" Click="AddNewInvoiceMenuButton_Action">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/add.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                     <Separator/>
-                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action" />
+                    <MenuItem Header="Search Invoices" Click="SearchInvoicesMenuButton_Action">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/search.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Items">
-                    <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>
+                    <MenuItem Header="View/Edit existing Items" Click="EditItemsMenuButton_Action" IsVisibleChanged="MenuItem_IsVisibleChanged">
+                        <MenuItem.Icon>
+                            <Image Source="/App_Resources/Images/Menu_Icons/add.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="MenuBarAboutItem_Action" IsVisibleChanged="MenuItem_IsVisibleChanged"/>

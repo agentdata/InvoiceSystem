@@ -213,5 +213,23 @@
     <Resource Include="App_Resources\Images\Other_Icons\add.png" />
     <Resource Include="App_Resources\Images\Other_Icons\minus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Other_Icons\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Menu_Icons\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Menu_Icons\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Menu_Icons\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Menu_Icons\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="App_Resources\Images\Menu_Icons\exit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

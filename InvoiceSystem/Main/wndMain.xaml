@@ -28,8 +28,16 @@
                 <DataGrid Grid.Row="0" Name="InvoiceTable_DataGrid" ItemsSource="{Binding Invoices.InvoicesCollection}" AutoGenerateColumns="False" >
                     <DataGrid.Resources>
                         <ContextMenu x:Key="RightClick_ContextMenu">
-                            <MenuItem Header="_Edit" Click="InvoiceRowRightClickEdit_Action"/>
-                            <MenuItem Header="_Delete" Click="GridViewRightClickDelete_Action" Icon="/Images/Menu_Icons/delete.png"/>
+                            <MenuItem Header="_Edit" Click="InvoiceRowRightClickEdit_Action">
+                                <MenuItem.Icon>
+                                    <Image Source="/App_Resources/Images/Other_Icons/edit.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="_Delete" Click="GridViewRightClickDelete_Action">
+                                <MenuItem.Icon>
+                                    <Image Source="/App_Resources/Images/Other_Icons/delete.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </ContextMenu>
                         <Style x:Key="ElementError" TargetType="{x:Type TextBlock }">
                             <Setter Property="DataGridCell.ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>

@@ -82,7 +82,7 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void MenuBarSettingsButton_Action(object sender, RoutedEventArgs e)
         {
-            viewNavigationController.ChangeCurrentView(new Settings(viewNavigationController));
+            MessageBox.Show("Didn't quite get settings page functional.", "Unimplemented");
         }
 
         /// <summary>
