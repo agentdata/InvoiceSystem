@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace InvoiceSystem.Classes
 {
@@ -43,12 +44,7 @@ namespace InvoiceSystem.Classes
 
         internal void Remove(object p)
         {
-            throw new NotImplementedException();
-        }
-
-        internal object Where(Func<object, bool> p)
-        {
-            throw new NotImplementedException();
+            lineItems.Remove(p as LineItem);
         }
     }
 }

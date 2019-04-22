@@ -44,9 +44,6 @@ namespace InvoiceSystem.Main
         #endregion Properties
 
         #region Fields
-        //List that items are added to when they are being added to the list.
-        List<LineItem> newLineItems = new List<LineItem>();
-        List<LineItem> updateLineItems = new List<LineItem>();
 
         // Navigation controller which is passed around so that the view can be updated.
         private readonly ViewNavigationController viewNavigationController;
@@ -80,20 +77,8 @@ namespace InvoiceSystem.Main
         /// <param name="e"></param>
         private void SubmitButton_Button(object sender, RoutedEventArgs e)
         {
-            foreach (LineItem LineItem in newLineItems)
-            {
-                //add new lineitem
-                //Bug with lineitemnum turn this line off for prototype
-                //clsMainSQL.addNewLineItemSQL(CurrentInvoice.InvoiceNum, LineItem, "0", LineItem.Quantity);
-            }
-
-            foreach (LineItem LineItem in CurrentInvoice.LineItems.lineItems)
-            {
-                //update existing line item with new quantity
-                clsMainSQL.UpdateLineItemSQL(CurrentInvoice.InvoiceNum, LineItem.Item.ItemCode, LineItem.Quantity);
-            }
-
-            //add new line item
+            //clsMainLogic.addNewLineItems();
+            
             //update the invoice total cost.
             clsMainLogic.updateInvoiceTotalCost(CurrentInvoice);
             viewNavigationController.ChangeCurrentView(new wndMain(viewNavigationController));
@@ -123,26 +108,26 @@ namespace InvoiceSystem.Main
             Item selectedItem = (row.Item as Item);
             if (selectedItem != null)
             {
-                bool alreadyInInvoice = false;
+                bool AlreadyInInvoice = false;
                 foreach (LineItem LineItem in CurrentInvoice.LineItems.lineItems)
                 {
                     //if currentinvoice contains item add +1 to the quantity
                     if (LineItem.Item.ItemCode == selectedItem.ItemCode)
                     {
-                        //add item to current
-                        CurrentInvoice.LineItems.lineItems.Where(x => x.Item.ItemCode == selectedItem.ItemCode).FirstOrDefault().Quantity++;
-                        alreadyInInvoice = true;
-                        updateLineItems.Add(new LineItem(LineItem.Item, CurrentInvoice.LineItems.lineItems.Where(x => x.Item.ItemCode == selectedItem.ItemCode).FirstOrDefault().Quantity));
-                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
+                        AlreadyInInvoice = true;
+                        var newLineItem = LineItem;
+                        clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref newLineItem, "increase");
                     }
                 }
 
-                if (!alreadyInInvoice)
+                if (!AlreadyInInvoice)
                 {
+                    clsMainLogic.AddNewLineItemToExistingInvoice(ref _CurrentInvoice, selectedItem, 1);
                     CurrentInvoice.addItem(selectedItem, 1);
-                    //add lineitem to newlineitem list which will but updated at
-                    newLineItems.Add(new LineItem(selectedItem, 1));
                 }
+                _CurrentInvoice.updateTotalCost();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
+
             }
         }
         #endregion UI Actions
@@ -156,6 +141,7 @@ namespace InvoiceSystem.Main
                 if (null != row & row.IsSelected) yield return row;
             }
         }
+        
         private void IncreaseQuantityByOneButton_Action(object sender, RoutedEventArgs e)
         {
 
@@ -179,6 +165,8 @@ namespace InvoiceSystem.Main
             if (selectedLineItem != null)
             {
                 clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref selectedLineItem, "increase");
+                _CurrentInvoice.updateTotalCost();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
             }
         }
 
@@ -202,6 +190,8 @@ namespace InvoiceSystem.Main
             if (selectedLineItem != null)
             {
                 clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref selectedLineItem, "decrease");
+                _CurrentInvoice.updateTotalCost();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
             }
         }
 
@@ -226,7 +216,9 @@ namespace InvoiceSystem.Main
                     }
                 if (selectedLineItem != null)
                 {
-                    
+                    clsMainLogic.updateLineItemQuantity(ref _CurrentInvoice, ref selectedLineItem, "delete");
+                    _CurrentInvoice.updateTotalCost();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentInvoice)));
                 }
             }
         }

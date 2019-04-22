@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InvoiceSystem.OtherClasses
 {
-    public class Invoice: IEnumerable
+    public class Invoice
     {
         #region Properties
         public string InvoiceNum { get; set; }
@@ -58,9 +58,15 @@ namespace InvoiceSystem.OtherClasses
             TotalItems += quantity;
         }
 
-        public IEnumerator GetEnumerator()
+        public void updateTotalCost()
         {
-            throw new NotImplementedException();
+            int newTotalCost = new int();
+            foreach(LineItem LineItem in LineItems)
+            {
+                newTotalCost += Int32.Parse( LineItem.Item.Cost) * LineItem.Quantity;
+            }
+            this.TotalCost = newTotalCost.ToString();
         }
+
     }
 }
