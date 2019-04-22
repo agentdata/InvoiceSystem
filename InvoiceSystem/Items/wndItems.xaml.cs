@@ -83,6 +83,7 @@ namespace InvoiceSystem.Items
                 //disable CancelButton & SubmitButton
                 CancelButton.IsEnabled = false;
                 SubmitButton.IsEnabled = false;
+                
             }
             catch (Exception ex)
             {
@@ -142,6 +143,11 @@ namespace InvoiceSystem.Items
                 if (index > -1)
                 {
                     //int index = ItemDataGrid.SelectedIndex;
+                    if (!(EditButton.IsEnabled) || !(DeleteButton.IsEnabled)){
+                        EditButton.IsEnabled = true;
+                        DeleteButton.IsEnabled = true;
+                    }
+
 
                     CodeText.Text = clsItemsLogic.ItemsList[index].ItemCode;
                     CostText.Text = clsItemsLogic.ItemsList[index].Cost;
@@ -364,14 +370,30 @@ namespace InvoiceSystem.Items
         /// <param name="e"></param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
             try
             {
-                item = (Item)ItemDataGrid.SelectedItem;
+                int index = ItemDataGrid.SelectedIndex;
 
-                CodeText.Text = item.ItemCode;
-                CostText.Text = item.Cost;
-                DescText.Text = item.ItemDesc;
+                if (index < 0)
+                {
+                    CodeText.Text = "";
+                    CostText.Text = "";
+                    DescText.Text = "";
+                }
+                else
+                {
+
+                    //item = (Item)ItemDataGrid.SelectedItem;
+
+                    //CodeText.Text = item.ItemCode;
+                    //CostText.Text = item.Cost;
+                    //DescText.Text = item.ItemDesc;
+
+                    CodeText.Text = clsItemsLogic.ItemsList[index].ItemCode;
+                    CostText.Text = clsItemsLogic.ItemsList[index].Cost;
+                    DescText.Text = clsItemsLogic.ItemsList[index].ItemDesc;
+                }
 
                 ReadView();
 
