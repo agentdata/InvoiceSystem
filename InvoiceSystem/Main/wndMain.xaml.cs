@@ -48,7 +48,7 @@ namespace InvoiceSystem.Main
             Invoices = clsMainLogic.getAllInvoices(Invoices);
             DataContext = this;
         }
-        #endregion
+        #endregion Constructors
 
         #region UI Action
         /// <summary>

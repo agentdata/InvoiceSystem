@@ -12,10 +12,15 @@ namespace InvoiceSystem.OtherClasses
     public class Invoice
     {
         #region Properties
+        //the invoicenum associated with this invoice
         public string InvoiceNum { get; set; }
+        //the invoice date associated with this invoice
         public string InvoiceDate { get; set;}
+        //The total cost associated with this invoice.
         public string TotalCost { get; set;}
+        //LineItems object which is essentially a list of lineitems.
         public LineItems LineItems { get; set; } = new LineItems();
+        //tracks the total number of items associated with this invoice.
         public int TotalItems { get; set; } = 0;
         #endregion Properties
 
@@ -58,6 +63,9 @@ namespace InvoiceSystem.OtherClasses
             TotalItems += quantity;
         }
 
+        /// <summary>
+        /// Updates the totalcost for this Invoice, loops through each lineitem and calculates what the cost should be.
+        /// </summary>
         public void updateTotalCost()
         {
             int newTotalCost = new int();
